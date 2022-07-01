@@ -8,21 +8,20 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "alarm")
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-public class Alarm extends BaseEntity{
-
+@Table(name = "categories")
+public class Category extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "alarmId")
+    @Column(name = "categoryId")
     private Long id;
 
-    @OneToMany(mappedBy = "alarm",cascade = CascadeType.ALL)
-    private List<Member> members;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "contents")
-    private String contents;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    private List<CommunityBoard> communityBoards;
 }

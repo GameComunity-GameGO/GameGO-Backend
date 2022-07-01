@@ -6,37 +6,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-public class CommunityBoard extends BaseEntity {
+public class Heart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comunityBoardId")
+    @Column(name = "heartId")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "count")
+    private Long count;
 
-    @Column(name = "contents")
-    private String contents;
-
-    @Column(name = "imgUrl")
-    private String imgUrl;
+    @Column(name = "temperature")
+    private int temperature;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId")
-    private Category category;
+    @JoinColumn(name="communityBoardId")
+    private CommunityBoard communityBoard;
 
-    @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
-    private List<Heart> hearts;
-
+    @OneToOne(fetch = FetchType.LAZY)
+    private Gamer gamer;
 }

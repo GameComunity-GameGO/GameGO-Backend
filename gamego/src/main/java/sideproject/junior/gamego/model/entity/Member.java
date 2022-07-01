@@ -6,36 +6,45 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "members")
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "memberId")
     private Long id;
 
-    @Column(name = "member_username")
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "member_password")
+    @Column(name = "memberPassword")
     private String password;
 
-    @Column(name = "member_nickname")
+    @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "member_jwt_refreshToken")
+    @Column(name = "refreshToken")
     private String refreshToken;
 
-    @Column(name = "member_imgurl")
+    @Column(name = "imgurl")
     private String imgUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_alarm")
+    @JoinColumn(name = "alarmId")
     private Alarm alarm;
 
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    private List<CommunityBoard> communityBoards;
+
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    private List<Heart> hearts;
+
+    @OneToMany(mappedBy = "member")
+    private List<ChatRoomJoinMember> chatRoomJoinMembers;
 }

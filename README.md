@@ -97,7 +97,7 @@ Organization에서 BackEnd 별도의 레파지토리에서 관리합니다.
 - `style` : 코드 스타일 혹은 포맷 등에 관한 커밋
 - `refactor` : 코드 리팩토링에 대한 커밋
 - `test` : 테스트 코드 수정에 대한 커밋
-
+- `setting` : 세팅에 관한 커밋
 # 3. 라이브러리
 
 - lombok

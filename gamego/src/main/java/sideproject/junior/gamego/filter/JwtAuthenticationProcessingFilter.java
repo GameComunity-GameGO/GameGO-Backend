@@ -32,11 +32,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     private final String NO_CHECK_URL="/api/v1/login";
 
-    private final String WHYCSS="/lib/css/normalize.css";
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(NO_CHECK_URL)||request.getRequestURI().equals(WHYCSS)){
+        if (request.getRequestURI().equals(NO_CHECK_URL)){
             filterChain.doFilter(request,response);
             return;
         }else {

@@ -45,4 +45,17 @@ public class MemberDTO {
         private String username;
         private String password;
     }
+
+    @Getter
+    @Setter
+    public class OnlyUsernameDTO{
+        String username;
+    }
+
+    @Getter
+    @Setter
+    public class SamePasswordCheckDTO{
+        String password;
+        String repassword;
+    }
 }

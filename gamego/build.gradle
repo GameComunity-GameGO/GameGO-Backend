@@ -1,13 +1,16 @@
 buildscript {
     ext {
         queryDslVersion = "5.0.0"
+        snippetsDir=file('build/generated-snippets')
     }
 }
+
 
 plugins {
     id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    id 'org.asciidoctor.convert' version "1.5.3"
     id 'java'
 }
 
@@ -19,6 +22,11 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+}
+
+asciidoctor { // (3)
+    inputs.dir snippetsDir
+    dependsOn test
 }
 
 repositories {
@@ -104,12 +112,29 @@ dependencies {
 
     //oauth
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //RestDocs API
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:1.2.6.RELEASE' // (4)
+    testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.6.RELEASE'
+
 }
 
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+
+    from file("build/asciidoc/html5/")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}
+
 
 def querydslDir = "$buildDir/generated/querydsl"
 

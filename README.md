@@ -22,7 +22,7 @@
 ## Package Naming
 
 - Controller,Service,Repository는 기능별로 Naming하여서 사용함
-- DTO와 Entity는 Model 패키지 내부에서 관리하며 DTO내부는 Request와 Response 용도에 따라 패키지를 따로 두어 분리하며 그 내부에서도 기능별로 패키지를 Naming 하여 분리하여 사용함
+- DTO와 Entity는 Model 패키지 내부에서 관리하며 DTO는 InnerClass로 용도에 따라 클래스내부에 클래스를 작성하는 방식으로 따로 두어 분리하며 그 내부에서도 기능별로 클래스를 Naming 하여 분리하여 사용함
 
 ## File Naming
 

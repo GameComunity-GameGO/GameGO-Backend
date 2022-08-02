@@ -56,5 +56,6 @@ public class AwsS3Controller {
     public ResponseEntity<Void> deleteFile(@RequestParam String fileName) {
         awsS3Service.deleteImage(fileName);
         return ResponseEntity.ok(null);
+
     }
 }

@@ -103,6 +103,5 @@ public class AwsS3Service {
         for (Images images : board.getImageList()) {
             deleteImage(images.getImgURL());
         }
-
     }
 }

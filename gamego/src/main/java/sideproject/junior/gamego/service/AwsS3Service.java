@@ -1,3 +1,4 @@
+/*
 package sideproject.junior.gamego.service;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -30,8 +31,8 @@ public class AwsS3Service {
     private String bucket;
 
     private final AmazonS3 amazonS3;
-    private final BoardRepository boardRepository;
-    private final ImagesRepository imagesRepository;
+//    private final BoardRepository boardRepository;
+//    private final ImagesRepository imagesRepository;
 
     public List<String> uploadImage(List<MultipartFile> multipartFile) {
         List<String> fileNameList = new ArrayList<>();
@@ -105,3 +106,4 @@ public class AwsS3Service {
         }
     }
 }
+*/

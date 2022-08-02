@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sideproject.junior.gamego.exception.member.MemberException;
+import sideproject.junior.gamego.exception.member.MemberExceptionType;
 import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.repository.MemberRepository;

@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/jwtwebsocket
+    url: jdbc:mariadb://gamego.c9d71oyl8as0.ap-northeast-2.rds.amazonaws.com:3306/gamego?useUnicode=yes&characterEncoding=UTF-8
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: 1234
+    password: lsh6451217
 
 
 #  redis:
@@ -28,6 +28,3 @@ spring:
     generate-ddl: true
   profiles:
     include: jwt
-
-server:
-  port: 2727

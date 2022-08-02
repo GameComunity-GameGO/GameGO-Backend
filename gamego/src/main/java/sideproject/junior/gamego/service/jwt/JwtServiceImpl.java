@@ -11,6 +11,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sideproject.junior.gamego.exception.member.MemberException;
+import sideproject.junior.gamego.exception.member.MemberExceptionType;
 import sideproject.junior.gamego.repository.MemberRepository;
 
 import javax.servlet.http.HttpServletRequest;

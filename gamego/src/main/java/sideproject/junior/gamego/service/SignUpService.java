@@ -19,7 +19,6 @@ public class SignUpService {
     public boolean checkExistUsername(String username) {
         System.out.println("username = " + username);
         Optional<Member> findUsername = memberRepository.findByUsername(username);
-        System.out.println("findUsername = " + findUsername.get().getUsername());
         if(findUsername.isEmpty()){
             return true;
         }else {

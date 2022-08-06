@@ -21,8 +21,6 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.info("JWT 토큰발급실패!");
         log.info("로그인에 실패하였습니다");
-        String message= StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
-        System.out.println("message = " + message);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("Login Fail");

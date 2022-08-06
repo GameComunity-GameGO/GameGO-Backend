@@ -40,11 +40,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getRequestURI().equals(NO_CHECK_URL)){
-            String message= StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
-            System.out.println("message = " + message);
-
-        }
-        if (request.getRequestURI().equals(NO_CHECK_URL)){
             filterChain.doFilter(request,response);
             return;
         }

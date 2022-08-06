@@ -38,26 +38,26 @@ public class MemberDTO {
     }
 
     @Getter
-    public class DeleteDTO{
+    public static class DeleteDTO{
         private Long id;
     }
 
     @Getter
     @Setter
-    public class ChangeStateDTO{
+    public static class ChangeStateDTO{
         private String username;
         private String password;
     }
 
     @Getter
     @Setter
-    public class OnlyUsernameDTO{
+    public static class OnlyUsernameDTO{
         String username;
     }
 
     @Getter
     @Setter
-    public class SamePasswordCheckDTO{
+    public static class SamePasswordCheckDTO{
         String password;
         String repassword;
     }

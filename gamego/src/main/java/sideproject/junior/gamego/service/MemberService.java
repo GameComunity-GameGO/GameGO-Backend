@@ -29,11 +29,11 @@ public class MemberService {
     @Transactional
     public ResponseEntity<?> SignUpApi(MemberDTO.SignUpDTO signUpDTO) throws MemberException{
         if (signUpDTO.getUsername() == null || signUpDTO.getPassword() == null){
-            return new ResponseEntity<>("아이디나 비밀번호가 입력되지않았습니다.", new MemberException(MemberExceptionType.NULL_OF_USERNAME_OR_PASSWORD));
+            return new ResponseEntity<>(new MemberException(MemberExceptionType.NULL_OF_USERNAME_OR_PASSWORD),HttpStatus.OK);
         }else if (!signUpDTO.getPassword().matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}")){
-            return new ResponseEntity<>("비밀번호 양식이 옳바르지 않습니다.",new MemberException(MemberExceptionType.WRONG_PASSWORD));
+            return new ResponseEntity<>(new MemberException(MemberExceptionType.WRONG_PASSWORD),HttpStatus.OK);
         }else if(memberRepository.findByUsername(signUpDTO.getUsername()).isPresent()) {
-            return new ResponseEntity<>("이미 있는 아이디 입니다.",new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME));
+            return new ResponseEntity<>(new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME),HttpStatus.OK);
         } else{
             Member member = signUpDTO.toEntity();
             member.addMemberAuthority();

@@ -1,3 +1,4 @@
+/*
 package sideproject.junior.gamego.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -31,3 +32,4 @@ public class AwsS3Config {
                 .build();
     }
 }
+*/

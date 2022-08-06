@@ -27,6 +27,15 @@ public class SignUpService {
         }
     }
 
+    public boolean checkExistNickname(String nickname) {
+        Optional<Member> findUsername = memberRepository.findByNickname(nickname);
+        if(findUsername.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public boolean checkSamePassword(String password, String repassword) {
         if (password.equals(repassword)) return true;
         else return false;

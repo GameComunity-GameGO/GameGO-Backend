@@ -22,7 +22,9 @@
 ## Package Naming
 
 - Controller,Service,Repository는 기능별로 Naming하여서 사용함
+
 - DTO와 Entity는 Model 패키지 내부에서 관리하며 DTO는 InnerClass로 용도에 따라 클래스내부에 클래스를 작성하는 방식으로 따로 두어 분리하며 그 내부에서도 기능별로 클래스를 Naming 하여 분리하여 사용함
+
 
 ## File Naming
 
@@ -63,6 +65,7 @@ Organization에서 BackEnd 별도의 레파지토리에서 관리합니다.
 - develop : 개발을 위한 브랜치
 - feature  :  서비스 기능별 브랜치
 - hotfix : main 브랜치에서 발생한 버그를 수정하는 브랜치
+
 - `feature` 브랜치는 하나의 기능을 개발하기 위한 브랜치입니다. 부모는 `develop`이며, 개발이 완료되면 `develop`에 merge합니다. 브랜치 이름은 보통 `feature/*`이 됩니다.
 - `develop` 브랜치는 개발을 위한 브랜치입니다. 여러 `feature`들이 merge되는 장소이며, 아직 release되지 않은 기능들이 모여 있게 됩니다.
 - `master` 브랜치는 실제 운영 중인 서비스의 브랜치입니다.

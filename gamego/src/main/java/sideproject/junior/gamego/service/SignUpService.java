@@ -13,6 +13,7 @@ public class SignUpService {
     private MemberRepository memberRepository;
 
     public boolean checkExistUsername(String username) {
+        System.out.println("username = " + username);
         if(memberRepository.findByUsername(username).isPresent()) return false;
         else return true;
     }

@@ -57,6 +57,12 @@ public class MemberDTO {
 
     @Getter
     @Setter
+    public static class OnlyNicknameDTO{
+        String nickname;
+    }
+
+    @Getter
+    @Setter
     public static class SamePasswordCheckDTO{
         String password;
         String repassword;

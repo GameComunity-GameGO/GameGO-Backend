@@ -23,18 +23,20 @@ public class SignUpAPIController {
 
     @PostMapping("/existUsername")
     public ResponseEntity<Boolean> existUsernameCheck(@RequestBody MemberDTO.OnlyUsernameDTO onlyUsernameDTO){
-        System.out.println("onlyUsernameDTO = " + onlyUsernameDTO.getUsername());
         boolean checkExist = signUpService.checkExistUsername(onlyUsernameDTO.getUsername());
-        System.out.println("checkExist = " + checkExist);
-        if (checkExist) return new ResponseEntity<>(true, HttpStatus.OK);
-        else return new ResponseEntity<>(false,HttpStatus.OK);
+        return new ResponseEntity<>(checkExist, HttpStatus.OK);
+    }
+
+    @PostMapping("/existNickname")
+    public ResponseEntity<Boolean> existNicknameCheck(@RequestBody MemberDTO.OnlyNicknameDTO onlyNicknameDTO){
+        boolean checkExist = signUpService.checkExistNickname(onlyNicknameDTO.getNickname());
+        return new ResponseEntity<>(checkExist, HttpStatus.OK);
     }
 
     @PostMapping("/samePassword")
     public ResponseEntity<?> samePasswordCheck(@RequestBody MemberDTO.SamePasswordCheckDTO samePasswordCheckDTO){
         boolean samePassword = signUpService.checkSamePassword(samePasswordCheckDTO.getPassword(), samePasswordCheckDTO.getRepassword());
-        if (samePassword) return new ResponseEntity<>("비밀번호 일치",HttpStatus.OK);
-        else return new ResponseEntity<>("비밀번호 불일치",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(samePassword,HttpStatus.OK);
     }
 
 }

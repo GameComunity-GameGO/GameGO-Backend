@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.repository.MemberRepository;
+
+import java.util.Optional;
 
 @Service
 @Log4j2
@@ -14,8 +17,9 @@ public class SignUpService {
 
     public boolean checkExistUsername(String username) {
         System.out.println("username = " + username);
-        if(memberRepository.findByUsername(username).isPresent()) return false;
-        else return true;
+        Optional<Member> findMember = memberRepository.findByUsername(username);
+        if(findMember.isEmpty()) return true;
+        else return false;
     }
 
     public boolean checkSamePassword(String password, String repassword) {

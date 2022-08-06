@@ -46,7 +46,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
         String message= StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
 
         Map<String, String> usernameAndPasswordMap=objectMapper.readValue(message,Map.class);
-
+        System.out.println("usernameAndPasswordMap = " + usernameAndPasswordMap);
         String username=usernameAndPasswordMap.get(USERNAME_KEY);
         String password=usernameAndPasswordMap.get(PASSWORD_KEY);
 

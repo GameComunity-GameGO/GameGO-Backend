@@ -16,7 +16,7 @@ import sideproject.junior.gamego.service.SignUpService;
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/SignUp")
 public class SignUpAPIController {
 
     private final SignUpService signUpService;

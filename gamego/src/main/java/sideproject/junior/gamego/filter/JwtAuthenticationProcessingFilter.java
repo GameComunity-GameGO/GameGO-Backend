@@ -37,10 +37,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (request.getRequestURI().equals(NO_CHECK_URL)){
             filterChain.doFilter(request,response);
             return;
-        }else {
-            System.out.println("request = " + request.getRequestURI());
-            System.out.println("request.header = " + request.getHeader("Authorization"));
-            System.out.println("request.getHeader(\"Authorization-refresh\") = " + request.getHeader("Authorization-refresh"));
         }
 
         String refreshToken = jwtService

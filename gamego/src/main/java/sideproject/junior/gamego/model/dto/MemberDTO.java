@@ -25,10 +25,13 @@ public class MemberDTO {
         private String password;
 
         private Role role;
+
+        private String nickname;
         public Member toEntity(){
             return Member.builder()
                     .username(username)
                     .password(password)
+                    .nickname(nickname)
                     .role(role)
                     .build();
         }

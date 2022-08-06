@@ -26,12 +26,12 @@ public class MemberAPIController {
     }
 
     @PostMapping("/member")
-    public ResponseEntity<String> signup(@RequestBody MemberDTO.SignUpDTO signUpDTO){
+    public ResponseEntity<?> signup(@RequestBody MemberDTO.SignUpDTO signUpDTO){
         log.info("회원가입");
         log.info("아이디 ={}",signUpDTO.getUsername());
         log.info("signUpDto ={}",signUpDTO);
-        String signUpAPiState = memberService.SignUpApi(signUpDTO);
-        return new ResponseEntity<>(signUpAPiState, HttpStatus.OK);
+        ResponseEntity<?> signUpApiState = memberService.SignUpApi(signUpDTO);
+        return signUpApiState;
     }
 
     @PutMapping("/member")

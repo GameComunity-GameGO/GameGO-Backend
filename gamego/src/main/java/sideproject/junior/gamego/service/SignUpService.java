@@ -14,12 +14,13 @@ import java.util.Optional;
 @Log4j2
 @RequiredArgsConstructor
 public class SignUpService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public boolean checkExistUsername(String username) {
+        System.out.println("username = " + username);
         Optional<Member> findUsername = memberRepository.findByUsername(username);
-
-        if(!findUsername.isPresent()){
+        System.out.println("findUsername = " + findUsername.get().getUsername());
+        if(findUsername.isEmpty()){
             return true;
         }else {
             return false;

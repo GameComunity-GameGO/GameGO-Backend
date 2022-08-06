@@ -22,10 +22,12 @@ public class SignUpAPIController {
     private final SignUpService signUpService;
 
     @PostMapping("/existUsername")
-    public ResponseEntity<?> existUsernameCheck(@RequestBody MemberDTO.OnlyUsernameDTO onlyUsernameDTO){
+    public ResponseEntity<Boolean> existUsernameCheck(@RequestBody MemberDTO.OnlyUsernameDTO onlyUsernameDTO){
+        System.out.println("onlyUsernameDTO = " + onlyUsernameDTO.getUsername());
         boolean checkExist = signUpService.checkExistUsername(onlyUsernameDTO.getUsername());
-        if (checkExist) return new ResponseEntity<>("사용가능한 아이디입니다", HttpStatus.OK);
-        else return new ResponseEntity<>(new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME),HttpStatus.OK);
+        System.out.println("checkExist = " + checkExist);
+        if (checkExist) return new ResponseEntity<>(true, HttpStatus.OK);
+        else return new ResponseEntity<>(false,HttpStatus.OK);
     }
 
     @PostMapping("/samePassword")

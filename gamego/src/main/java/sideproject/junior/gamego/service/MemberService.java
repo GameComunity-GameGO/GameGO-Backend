@@ -65,5 +65,7 @@ public class MemberService {
         return "회원이 성공적으로 삭제되었습니다";
     }
 
-
+    public Member MemberStateApi(String username){
+        return memberRepository.findByUsername(username).get();
+    }
 }

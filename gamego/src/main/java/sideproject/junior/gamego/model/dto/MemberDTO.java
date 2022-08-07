@@ -67,4 +67,21 @@ public class MemberDTO {
         String password;
         String repassword;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class MemberResponseDTO{
+
+        @Getter
+        @Setter
+        public static class MemberStateResponseDTO{
+            private Long id;
+            private String username;
+            private String nickname;
+            private String authority;
+            private String refreshToken;
+        }
+    }
+
 }

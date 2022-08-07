@@ -2,9 +2,9 @@ jwt:
   secret: Snd0QVBJU2VydmljZUFuZFdlYlNvY2tldFByb2plY3Q= #JwtAPIServiceAndWebSocketProject
 
   access:
-    expiration: 80 #3600*24
+    expiration: 86400 #3600*24
     header: Authorization
 
   refresh:
-    expiration: 1600 #3600*24*7
+    expiration: 604800 #3600*24*7
     header: Authorization_refresh

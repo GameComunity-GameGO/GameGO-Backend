@@ -41,9 +41,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("request.getRequestURI() = " + request.getRequestURI());
         System.out.println("request = " + request.getHeader("Authorization_refresh"));
-        String authorization_refresh = request.getHeader("Authorization_refresh");
-        request.setAttribute("Authorization_refresh","");
-        System.out.println("request 2222= " + request.getHeader("Authorization_refresh"));
         if (request.getRequestURI().equals(NO_CHECK_URL)){
             filterChain.doFilter(request,response);
             return;

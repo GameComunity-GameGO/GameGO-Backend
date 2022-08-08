@@ -36,9 +36,14 @@ public class LogInOutAPIController {
     @PostMapping("/logout")
     public ResponseEntity<?> logoutForm(MemberDTO.OnlyUsernameDTO onlyUsernameDTO){
 //        Member findMember = memberService.MemberStateApi(onlyUsernameDTO.getUsername());
-        jwtService.destroyRefreshToken(onlyUsernameDTO.getUsername());
-        jwtService.createAccessToken(onlyUsernameDTO.getUsername());
-        return new ResponseEntity<>("토큰이 파기되고 로그아웃 되었습니다", HttpStatus.OK);
+        if (onlyUsernameDTO.getUsername()!=null){
+            jwtService.destroyRefreshToken(onlyUsernameDTO.getUsername());
+            jwtService.createAccessToken(onlyUsernameDTO.getUsername());
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(false,HttpStatus.OK);
+        }
+
     }
 
     public MemberDTO.MemberResponseDTO.MemberStateResponseDTO setMemberStateResponse(Member member,MemberDTO.MemberResponseDTO.MemberStateResponseDTO memberStateResponseDTO){

@@ -34,11 +34,11 @@ public class LogInOutAPIController {
         return  returnDto;
     }
     @PostMapping("/logout")
-    public ResponseEntity<?> logoutForm(MemberDTO.OnlyUsernameDTO onlyUsernameDTO){
-//        Member findMember = memberService.MemberStateApi(onlyUsernameDTO.getUsername());
-        if (onlyUsernameDTO.getUsername()!=null){
-            jwtService.destroyRefreshToken(onlyUsernameDTO.getUsername());
-            jwtService.createAccessToken(onlyUsernameDTO.getUsername());
+    public ResponseEntity<?> logoutForm(){
+        String username = securityUtil.returnLoginMemberInfo();
+        if (username!=null){
+            jwtService.destroyRefreshToken(username);
+            jwtService.createAccessToken(username);
             return new ResponseEntity<>(true, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(false,HttpStatus.OK);

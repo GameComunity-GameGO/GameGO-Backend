@@ -35,7 +35,7 @@ public class MemberAPIController {
     }
 
     @PutMapping("/member")
-    public ResponseEntity<String> changeMemberState(MemberDTO.ChangeStateDTO changeStateDTO){
+    public ResponseEntity<String> changeMemberState(@RequestBody MemberDTO.ChangeStateDTO changeStateDTO){
         String changeMemberAPiState = memberService.MemberStateChangeApi(changeStateDTO);
         return new ResponseEntity<>(changeMemberAPiState,HttpStatus.OK);
     }

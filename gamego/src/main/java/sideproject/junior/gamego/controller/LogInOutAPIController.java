@@ -38,7 +38,6 @@ public class LogInOutAPIController {
         String username = securityUtil.returnLoginMemberInfo();
         if (username!=null){
             jwtService.destroyRefreshToken(username);
-            jwtService.createAccessToken(username);
             return new ResponseEntity<>(true, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(false,HttpStatus.OK);

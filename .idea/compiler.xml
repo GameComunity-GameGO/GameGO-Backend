@@ -10,5 +10,8 @@
         <module name="gamego.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gamego.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

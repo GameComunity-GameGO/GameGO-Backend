@@ -37,12 +37,15 @@ public class CommunityBoard extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Builder.Default
     @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
     private List<Likes> likes = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
     private List<Reply> replyList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
     private List<Images> imageList = new ArrayList<>();
 

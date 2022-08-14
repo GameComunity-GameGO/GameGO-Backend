@@ -2,6 +2,7 @@ package sideproject.junior.gamego.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
 import sideproject.junior.gamego.model.dto.reply.RequestReplyDTO;
 import sideproject.junior.gamego.model.entity.Member;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyService {
 
     private final ReplyRepository replyRepository;

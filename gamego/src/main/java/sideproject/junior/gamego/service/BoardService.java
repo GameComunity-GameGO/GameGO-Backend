@@ -60,7 +60,7 @@ public class BoardService {
 
         log.info("board = " + board.getId() );
 
-        return board.toDTO();
+        return board.toResponseDTO(member);
     }
 
     public ResponseBoardDTO updateBoard(Long memberId, RequestBoardDTO dto, Long boarId) {

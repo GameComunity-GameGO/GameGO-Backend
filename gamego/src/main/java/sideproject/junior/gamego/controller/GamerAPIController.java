@@ -40,5 +40,6 @@ public class GamerAPIController {
     @DeleteMapping("/gamer/{id}")
     public ResponseEntity<?> gamerDelete(@PathVariable Long id){
         gamerService.deleteGamerApi(id);
+        return new ResponseEntity<>("회원 삭제 API 완료",HttpStatus.OK);
     }
 }

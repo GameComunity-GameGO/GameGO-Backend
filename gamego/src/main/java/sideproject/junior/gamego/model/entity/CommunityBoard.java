@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Builder
 public class CommunityBoard extends BaseEntity {

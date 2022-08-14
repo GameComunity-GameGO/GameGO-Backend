@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import sideproject.junior.gamego.repository.MemberRepository;
 
 
 @RequiredArgsConstructor
 @Service
 public class SecurityUtil {
+
+    private final MemberRepository memberRepository;
 
     public String returnLoginMemberInfo(){
         UserDetails loginMember = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -16,7 +19,7 @@ public class SecurityUtil {
     }
 
 
-    /*public Member returnMemberInfo(String username){
-        return memberService.findByUsername(username);
-    }*/
+    public Long getMemberId(){
+        return memberRepository.findMemberByUsername(returnLoginMemberInfo()).getId();
+    }
 }

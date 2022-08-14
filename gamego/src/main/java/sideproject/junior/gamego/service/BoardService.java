@@ -1,6 +1,7 @@
 package sideproject.junior.gamego.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import sideproject.junior.gamego.repository.board.BoardRepository;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class BoardService {
 
     private final BoardRepository boardRepository;
@@ -33,6 +35,8 @@ public class BoardService {
 
     public ResponseBoardDTO createBoard(Long memberId, RequestBoardDTO dto) {
 
+        log.info("BoardService.createBoard 호출");
+
         String category = dto.getCategory();
 
         Member member = memberRepository.findById(memberId).get();
@@ -47,6 +51,8 @@ public class BoardService {
                 .build();
 
         CommunityBoard board = boardRepository.save(createBoard);
+
+        log.info("board = " + board );
 
         return board.toDTO();
     }

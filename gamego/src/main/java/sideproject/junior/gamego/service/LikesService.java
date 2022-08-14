@@ -2,6 +2,7 @@ package sideproject.junior.gamego.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.entity.CommunityBoard;
 import sideproject.junior.gamego.model.entity.Likes;
 import sideproject.junior.gamego.model.entity.Member;
@@ -11,6 +12,7 @@ import sideproject.junior.gamego.repository.board.BoardRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LikesService {
 
     private final LikesRepository likesRepository;

@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.board.RequestBoardDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 import sideproject.junior.gamego.model.entity.Category;
@@ -16,6 +17,7 @@ import sideproject.junior.gamego.repository.board.BoardRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Log4j2
 public class BoardService {
 

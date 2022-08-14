@@ -1,5 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Gamer {
     @Column(name = "introduction")
     private String introdution;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
     private Member member;
 

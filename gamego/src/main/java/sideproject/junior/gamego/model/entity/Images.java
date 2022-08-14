@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Images extends BaseEntity {
 
     @Id

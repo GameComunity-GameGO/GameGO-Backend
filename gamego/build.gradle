@@ -154,5 +154,3 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
-
-

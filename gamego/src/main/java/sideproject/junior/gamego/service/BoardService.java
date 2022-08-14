@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.board.RequestBoardDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 import sideproject.junior.gamego.model.entity.Category;
@@ -16,6 +17,7 @@ import sideproject.junior.gamego.repository.board.BoardRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Log4j2
 public class BoardService {
 
@@ -41,7 +43,11 @@ public class BoardService {
 
         Member member = memberRepository.findById(memberId).get();
 
+        log.info("BoardService.createBoard - member = " + member.getId());
+
         Category getCategory = categoryService.getCategory(category);
+
+        log.info("BoardService.createBoard - category = " + getCategory.getTitle());
 
         CommunityBoard createBoard = CommunityBoard.builder()
                 .title(dto.getTitle())
@@ -52,9 +58,9 @@ public class BoardService {
 
         CommunityBoard board = boardRepository.save(createBoard);
 
-        log.info("board = " + board );
+        log.info("board = " + board.getId() );
 
-        return board.toDTO();
+        return board.toResponseDTO(member);
     }
 
     public ResponseBoardDTO updateBoard(Long memberId, RequestBoardDTO dto, Long boarId) {

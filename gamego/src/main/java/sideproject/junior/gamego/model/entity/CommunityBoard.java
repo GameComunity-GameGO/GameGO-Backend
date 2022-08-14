@@ -1,6 +1,7 @@
 package sideproject.junior.gamego.model.entity;
 
 import lombok.*;
+import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 
 import javax.persistence.*;
@@ -10,14 +11,14 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Builder
 public class CommunityBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "communityBoard_id")
+    @Column(name = "community_board_id")
     private Long id;
 
     @Column(name = "title")
@@ -58,6 +59,7 @@ public class CommunityBoard extends BaseEntity {
                 .likes(this.likes.stream().map(Likes::toDTO).collect(Collectors.toList()))
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
+                .memberDTO(this.member.toDTO())
                 .build();
     }
 
@@ -71,5 +73,18 @@ public class CommunityBoard extends BaseEntity {
 
     public void insertImage(Images img){
         this.imageList.add(img);
+    }
+
+    public ResponseBoardDTO toResponseDTO(Member member) {
+        return ResponseBoardDTO.builder()
+                .boardId(this.id)
+                .title(this.title)
+                .contents(this.contents)
+                .category(this.category.getTitle())
+                .likes(this.likes.stream().map(Likes::toDTO).collect(Collectors.toList()))
+                .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
+                .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
+                .memberDTO(member.toDTO())
+                .build();
     }
 }

@@ -14,7 +14,6 @@ public class GamerDTO {
 
     @Getter
     @Setter
-    @NoArgsConstructor
     public static class GamerRegistationDTO{
         private String gameUsername;
         private String introdution;

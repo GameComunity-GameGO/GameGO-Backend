@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "categories")
 public class Category extends BaseEntity{
     @Id

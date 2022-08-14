@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Builder
 public class CommunityBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "communityBoard_id")
+    @Column(name = "community_board_id")
     private Long id;
 
     @Column(name = "title")

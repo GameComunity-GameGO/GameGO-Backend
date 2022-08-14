@@ -1,7 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
 import lombok.*;
-import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 
 import javax.persistence.*;
@@ -60,8 +59,8 @@ public class CommunityBoard extends BaseEntity {
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
                 .memberDTO(this.member.toDTO())
-                .createdDate(this.getCreatedDate())
-                .lastModifiedDate(this.getLastModifiedDate())
+                .createdDate(this.createdDate)
+                .lastModifiedDate(this.lastModifiedDate)
                 .build();
     }
 
@@ -87,8 +86,8 @@ public class CommunityBoard extends BaseEntity {
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
                 .memberDTO(member.toDTO())
-                .createdDate(this.getCreatedDate())
-                .lastModifiedDate(this.getLastModifiedDate())
+                .createdDate(this.createdDate)
+                .lastModifiedDate(this.lastModifiedDate)
                 .build();
     }
 }

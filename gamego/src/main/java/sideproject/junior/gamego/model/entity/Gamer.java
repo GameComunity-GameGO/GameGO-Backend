@@ -24,7 +24,7 @@ public class Gamer {
     @Column(name = "introduction")
     private String introdution;
 
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
     private Member member;
 

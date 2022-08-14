@@ -21,7 +21,9 @@ public class MemberAPIController {
 
     @GetMapping("/members")
     public ResponseEntity<List<Member>> memberList(){
+        log.info("멤버리스트");
         List<Member> members = memberService.MemberListApi();
+        System.out.println("members = " + members);
         return new ResponseEntity<>(members,HttpStatus.OK);
     }
 
@@ -41,7 +43,7 @@ public class MemberAPIController {
     }
 
     @DeleteMapping("/member")
-    public ResponseEntity<String> deleteMember(MemberDTO.DeleteDTO deleteDTO){
+    public ResponseEntity<String> deleteMember(@RequestBody MemberDTO.DeleteDTO deleteDTO){
         String deleteApiState = memberService.MemberDeleteApi(deleteDTO);
         return new ResponseEntity<>(deleteApiState,HttpStatus.OK);
     }

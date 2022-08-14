@@ -43,7 +43,11 @@ public class BoardService {
 
         Member member = memberRepository.findById(memberId).get();
 
+        log.info("BoardService.createBoard - member = " + member.getId());
+
         Category getCategory = categoryService.getCategory(category);
+
+        log.info("BoardService.createBoard - category = " + getCategory.getTitle());
 
         CommunityBoard createBoard = CommunityBoard.builder()
                 .title(dto.getTitle())
@@ -54,7 +58,7 @@ public class BoardService {
 
         CommunityBoard board = boardRepository.save(createBoard);
 
-        log.info("board = " + board );
+        log.info("board = " + board.getId() );
 
         return board.toDTO();
     }

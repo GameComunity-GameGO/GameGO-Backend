@@ -9,7 +9,6 @@ import sideproject.junior.gamego.model.entity.Gamer;
 import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.repository.GamerRepository;
-import sideproject.junior.gamego.repository.MemberRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +25,8 @@ public class GamerService {
 
     private final MemberService memberService;
 
+    private final GameService gameService;
+
     public List<Gamer> getGamerListApi(){
         List<Gamer> all = gamerRepository.findAll();
         return all;
@@ -37,13 +38,17 @@ public class GamerService {
     }
 
     @Transactional
-    public void registationGamerApi(GamerDTO.GamerRegistationDTO gamerRegistationDTO){
-        String username = securityUtil.returnLoginMemberInfo();
-        Member findMember = memberService.MemberStateApi(username);
-        gamerRegistationDTO.setMember(findMember);
-        Gamer entity = gamerRegistationDTO.toEntity();
-        gamerRepository.save(entity);
-
+    public void registationGamerApi(GamerDTO.GamerRegistationDTO gamerRegistationDTO) throws IllegalStateException{
+        boolean nameCheck = gameNameCheckApi(gamerRegistationDTO.getGame());
+//        if (nameCheck) {
+            String username = securityUtil.returnLoginMemberInfo();
+            Member findMember = memberService.MemberStateApi(username);
+            gamerRegistationDTO.setMember(findMember);
+            Gamer entity = gamerRegistationDTO.toEntity();
+            gamerRepository.save(entity);
+//        }else {
+//            throw new IllegalStateException("게임이름이 없습니다");
+//        }
     }
 
     @Transactional
@@ -54,5 +59,11 @@ public class GamerService {
         }else {
             gamerRepository.delete(findGamer.get());
         }
+    }
+
+    public boolean gameNameCheckApi(String game){
+        boolean b = gameService.gameNameCheckApi(game);
+        if (b) return true;
+        else return false;
     }
 }

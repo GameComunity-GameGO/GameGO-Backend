@@ -1,9 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +16,9 @@ public class Gamer {
     @Column(name = "gamerId")
     private Long id;
 
+    @Column(name = "gameUsername")
+    private String gameUsername;
+
     @Column(name = "introduction")
     private String introdution;
 
@@ -30,4 +30,15 @@ public class Gamer {
 
     @OneToMany(mappedBy = "gamer")
     private List<HashTag> hashTags;
+
+    @Builder
+    public Gamer(String gameUsername, String introdution, Member member, List<HashTag> hashTags) {
+        this.gameUsername = gameUsername;
+        this.introdution = introdution;
+        this.member = member;
+        this.hashTags = hashTags;
+    }
+
+    public void setGame(String game){
+    }
 }

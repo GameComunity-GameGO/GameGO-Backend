@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity {
 

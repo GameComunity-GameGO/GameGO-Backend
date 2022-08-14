@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import sideproject.junior.gamego.model.dto.GamerDTO;
 import sideproject.junior.gamego.model.entity.Gamer;
 import sideproject.junior.gamego.model.entity.Member;
@@ -38,7 +39,8 @@ public class GamerService {
     }
 
     @Transactional
-    public void registationGamerApi(GamerDTO.GamerRegistationDTO gamerRegistationDTO) throws IllegalStateException{
+    public void registationGamerApi(GamerDTO.GamerRegistationDTO gamerRegistationDTO) throws IllegalStateException{;
+        System.out.println("gamerRegistationDTO.getGameUsername() = " + gamerRegistationDTO.getGameUsername());
         boolean nameCheck = gameNameCheckApi(gamerRegistationDTO.getGame());
 //        if (nameCheck) {
             String username = securityUtil.returnLoginMemberInfo();

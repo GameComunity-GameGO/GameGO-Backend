@@ -54,9 +54,10 @@ public class Member extends BaseEntity{
 
 
     @Builder
-    public Member(String username, String password,Role role) {
+    public Member(String username, String password,String nickname,Role role) {
         this.username = username;
         this.password = password;
+        this.nickname=nickname;
         this.role=role;
     }
 
@@ -85,5 +86,13 @@ public class Member extends BaseEntity{
 
     public void encodeToPassword(PasswordEncoder passwordEncoder){
         this.password=passwordEncoder.encode(password);
+    }
+
+    public MemberDTO toDTO(){
+        return MemberDTO.builder()
+                .id(this.id)
+                .username(this.username)
+                .nickname(this.nickname)
+                .build();
     }
 }

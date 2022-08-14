@@ -1,9 +1,18 @@
+cloud:
+  aws:
+    stack:
+      auto: false
+    s3:
+      bucket: game-go
+    region:
+      static: ap-northeast-2
+
 spring:
   datasource:
-    url: jdbc:mariadb://gamego.c9d71oyl8as0.ap-northeast-2.rds.amazonaws.com:3306/gamego?useUnicode=yes&characterEncoding=UTF-8
+    url: rds-mariadb.cotegeyjjgmj.ap-northeast-2.rds.amazonaws.com:3308/gamego?useUnicode=yes&characterEncoding=UTF-8
     driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: lsh6451217
+    username: bootuser
+    password: bootuser
 
 
 #  redis:
@@ -22,9 +31,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        open-in-view: false
+
 
     hibernate:
       ddl-auto: update
     generate-ddl: true
   profiles:
     include: jwt
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

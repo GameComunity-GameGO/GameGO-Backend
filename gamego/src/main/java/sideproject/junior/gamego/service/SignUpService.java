@@ -2,19 +2,35 @@ package sideproject.junior.gamego.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.repository.MemberRepository;
+
+import java.util.Optional;
 
 @Service
 @Log4j2
 @RequiredArgsConstructor
 public class SignUpService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public boolean checkExistUsername(String username) {
-        if(memberRepository.findByUsername(username).isPresent()) return false;
-        else return true;
+        System.out.println("username = " + username);
+        Optional<Member> findUsername = memberRepository.findByUsername(username);
+        if(findUsername.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean checkExistNickname(String nickname) {
+        Optional<Member> findUsername = memberRepository.findByNickname(nickname);
+        if(findUsername.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public boolean checkSamePassword(String password, String repassword) {

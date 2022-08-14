@@ -1,18 +1,23 @@
 package sideproject.junior.gamego.model.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.model.entity.Role;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {
+
+    private Long id;
+
+    private String username;
+
+    private String nickname;
 
     @Getter
     @Setter
@@ -25,37 +30,63 @@ public class MemberDTO {
         private String password;
 
         private Role role;
+
+        private String nickname;
         public Member toEntity(){
             return Member.builder()
                     .username(username)
                     .password(password)
+                    .nickname(nickname)
                     .role(role)
                     .build();
         }
     }
 
     @Getter
-    public class DeleteDTO{
+    public static class DeleteDTO{
         private Long id;
     }
 
     @Getter
     @Setter
-    public class ChangeStateDTO{
+    public static class ChangeStateDTO{
         private String username;
         private String password;
     }
 
     @Getter
     @Setter
-    public class OnlyUsernameDTO{
+    public static class OnlyUsernameDTO{
         String username;
     }
 
     @Getter
     @Setter
-    public class SamePasswordCheckDTO{
+    public static class OnlyNicknameDTO{
+        String nickname;
+    }
+
+    @Getter
+    @Setter
+    public static class SamePasswordCheckDTO{
         String password;
         String repassword;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class MemberResponseDTO{
+
+        @Getter
+        @Setter
+        public static class MemberStateResponseDTO{
+            private Long id;
+            private String username;
+            private String nickname;
+            private String authority;
+            private String refreshToken;
+        }
+    }
+
 }

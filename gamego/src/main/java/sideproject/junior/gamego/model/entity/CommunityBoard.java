@@ -17,7 +17,7 @@ public class CommunityBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "communityBoard_id")
+    @Column(name = "community_oard_id")
     private Long id;
 
     @Column(name = "title")

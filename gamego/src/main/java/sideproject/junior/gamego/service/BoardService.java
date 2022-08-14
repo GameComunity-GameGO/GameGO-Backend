@@ -83,7 +83,7 @@ public class BoardService {
 
     public int deleteBoard(Long boardId, Long memberId) {
 
-        if(boardRepository.findById(boardId).get().getMember().getId() != memberId) {
+        if(boardRepository.findById(boardId).get().getMember().getId() == memberId) {
 
             imagesRepository.deleteImagesByCommunityBoardId(boardId);
 

@@ -8,6 +8,7 @@ import sideproject.junior.gamego.model.dto.LikeDTO;
 import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -32,4 +33,10 @@ public class ResponseBoardDTO {
     private List<ImageDTO> imageList;
 
     private int checkLikes;
+
+    private LocalDateTime createdDate;
+
+    private LocalDateTime lastModifiedDate;
+
+
 }

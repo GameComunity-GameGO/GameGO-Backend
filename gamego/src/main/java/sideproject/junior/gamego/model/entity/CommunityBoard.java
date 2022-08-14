@@ -60,6 +60,8 @@ public class CommunityBoard extends BaseEntity {
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
                 .memberDTO(this.member.toDTO())
+                .createdDate(this.getCreatedDate())
+                .lastModifiedDate(this.getLastModifiedDate())
                 .build();
     }
 
@@ -85,6 +87,8 @@ public class CommunityBoard extends BaseEntity {
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
                 .memberDTO(member.toDTO())
+                .createdDate(this.getCreatedDate())
+                .lastModifiedDate(this.getLastModifiedDate())
                 .build();
     }
 }

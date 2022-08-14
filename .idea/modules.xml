@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GameGO-Backend.iml" filepath="$PROJECT_DIR$/.idea/GameGO-Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gamego.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gamego.test.iml" />
     </modules>
   </component>
 </project>

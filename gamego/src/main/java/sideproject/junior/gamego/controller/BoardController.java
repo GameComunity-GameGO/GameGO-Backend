@@ -51,6 +51,11 @@ public class BoardController {
     public ResponseEntity<?> createBoard(@RequestBody RequestBoardDTO dto){
 
         log.info("/api/board 호출 ");
+        
+        log.info("dto.title = " + dto.getTitle());
+        log.info("dto.contents " + dto.getContents());
+        log.info("dto.category" + dto.getCategory());
+        log.info("dto.imgURL" + dto.getImgUrl());
 
         log.info("dto.title = " + dto.getTitle());
         log.info("dto.contents " + dto.getContents());

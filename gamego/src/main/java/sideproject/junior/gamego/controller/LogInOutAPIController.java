@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.principal.SecurityUtil;
+import sideproject.junior.gamego.service.GamerService;
 import sideproject.junior.gamego.service.MemberService;
 import sideproject.junior.gamego.service.jwt.JwtService;
 
@@ -25,6 +26,8 @@ public class LogInOutAPIController {
 
     private final JwtService jwtService;
 
+    private final GamerService gamerService;
+
     @PostMapping("/memberState")
     public MemberDTO.MemberResponseDTO.MemberStateResponseDTO memberState(){
         String username = securityUtil.returnLoginMemberInfo();
@@ -38,6 +41,7 @@ public class LogInOutAPIController {
         String username = securityUtil.returnLoginMemberInfo();
         if (username!=null){
             jwtService.destroyRefreshToken(username);
+            gamerService.gamerDeleteByLogout(username);
             return new ResponseEntity<>(true, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(false,HttpStatus.OK);

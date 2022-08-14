@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import java.time.LocalDateTime;
 

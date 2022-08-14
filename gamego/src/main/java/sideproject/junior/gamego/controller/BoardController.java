@@ -57,6 +57,11 @@ public class BoardController {
         log.info("dto.category" + dto.getCategory());
         log.info("dto.imgURL" + dto.getImgUrl());
 
+        log.info("dto.title = " + dto.getTitle());
+        log.info("dto.contents " + dto.getContents());
+        log.info("dto.category" + dto.getCategory());
+        log.info("dto.imgURL" + dto.getImgUrl());
+
         Long memberId = securityUtil.getMemberId();
 
         log.info("memberId = " + memberId);
@@ -82,7 +87,13 @@ public class BoardController {
     @DeleteMapping("/board/{boardId}")
     public ResponseEntity<?> deleteBoard(@PathVariable String boardId){
 
+        log.info("Delete : /api/board 호출");
+
         Long memberId = securityUtil.getMemberId();
+
+        log.info("boardId = " + boardId);
+
+        log.info("memberId = " + memberId);
 
         int check = boardService.deleteBoard(Long.parseLong(boardId), memberId);
 

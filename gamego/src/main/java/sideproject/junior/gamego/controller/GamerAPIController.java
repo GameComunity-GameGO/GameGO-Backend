@@ -36,4 +36,9 @@ public class GamerAPIController {
         gamerService.registationGamerApi(gamerRegistationDTO);
         return new ResponseEntity<>("게이머등록 API 성공",HttpStatus.OK);
     }
+
+    @DeleteMapping("/gamer/{id}")
+    public ResponseEntity<?> gamerDelete(@PathVariable Long id){
+        gamerService.deleteGamerApi(id);
+    }
 }

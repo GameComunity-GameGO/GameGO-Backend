@@ -12,6 +12,7 @@ import sideproject.junior.gamego.repository.GamerRepository;
 import sideproject.junior.gamego.repository.MemberRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Log4j2
@@ -45,4 +46,13 @@ public class GamerService {
 
     }
 
+    @Transactional
+    public void deleteGamerApi(Long id)throws NullPointerException {
+        Optional<Gamer> findGamer = gamerRepository.findById(id);
+        if (findGamer.isEmpty()){
+            throw new NullPointerException("아이디가 없습니다");
+        }else {
+            gamerRepository.delete(findGamer.get());
+        }
+    }
 }

@@ -50,7 +50,7 @@ public class BoardController {
     @PostMapping("/board")
     public ResponseEntity<?> createBoard(@RequestBody RequestBoardDTO dto){
 
-        log.info("/api/board 호출");
+        log.info("/api/board 호출 ");
 
         Long memberId = securityUtil.getMemberId();
 

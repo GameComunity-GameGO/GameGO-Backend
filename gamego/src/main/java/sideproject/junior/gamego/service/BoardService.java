@@ -52,7 +52,7 @@ public class BoardService {
 
         CommunityBoard board = boardRepository.save(createBoard);
 
-        log.info("board = " + board);
+        log.info("board = " + board );
 
         return board.toDTO();
     }

@@ -16,6 +16,7 @@ import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.repository.GamerRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +35,16 @@ public class GamerService {
     private final GameService gameService;
 
     public List<Gamer> getGamerListApi(){
+        int currentTime = Integer.parseInt(LocalDateTime.now().toString().substring(11, 13));
         List<Gamer> all = gamerRepository.findAll();
-        return all;
+        List<Gamer> returnList=new ArrayList<>();
+        for (Gamer gamer:all){
+            int dbTime = Integer.parseInt(gamer.getMember().getCreatedDate().toString().substring(11, 13));
+            if (currentTime-dbTime<30){
+                returnList.add(gamer);
+            }
+        }
+        return returnList;
     }
 
     public Gamer getGamerApi(Long id){
@@ -46,7 +55,8 @@ public class GamerService {
     @Transactional
     public ResponseEntity<?> registationGamerApi(GamerDTO.GamerRegistationDTO gamerRegistationDTO) throws IllegalStateException{;
         System.out.println("gamerRegistationDTO.getGameUsername() = " + gamerRegistationDTO.getGameUsername());
-        System.out.println("LocalDateTime.now() = " + LocalDateTime.now());
+
+
         boolean nameCheck = gameNameCheckApi(gamerRegistationDTO.getGame());
 //        if (nameCheck) {
         String username = securityUtil.returnLoginMemberInfo();

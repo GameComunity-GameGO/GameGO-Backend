@@ -11,7 +11,7 @@ spring:
   datasource:
     url: ${db.url}
     username: ${db.id}
-    password: ${db.pw}
+    password: ${db.pw} #커밋용주석
     driver-class-name: org.mariadb.jdbc.Driver
 
 

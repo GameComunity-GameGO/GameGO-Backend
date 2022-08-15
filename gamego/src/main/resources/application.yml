@@ -9,7 +9,7 @@ cloud:
 
 spring:
   datasource:
-    url: jdbc:mariadb://gamego.c9d71oyl8as0.ap-northeast-2.rds.amazonaws.com:3306/gamego?useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mariadb://gamego.c9d71oyl8as0.ap-northeast-2.rds.amazonaws.com:3306/gamego?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul"
     username: root
     password: lsh6451217
     driver-class-name: org.mariadb.jdbc.Driver

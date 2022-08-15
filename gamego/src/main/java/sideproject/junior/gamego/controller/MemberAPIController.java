@@ -27,9 +27,9 @@ public class MemberAPIController {
         return new ResponseEntity<>(members,HttpStatus.OK);
     }
 
-    @GetMapping("/member")
-    public ResponseEntity<Member> memberState(@RequestBody MemberDTO.OnlyUsernameDTO onlyUsernameDTO){
-        Member member = memberService.memberStateApi(onlyUsernameDTO.getUsername());
+    @GetMapping("/member/{username}")
+    public ResponseEntity<Member> memberState(@PathVariable String username){
+        Member member = memberService.memberStateApi(username);
         return new ResponseEntity<>(member,HttpStatus.OK);
     }
 

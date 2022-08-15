@@ -15,6 +15,7 @@ import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.repository.GamerRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,7 @@ public class GamerService {
     @Transactional
     public ResponseEntity<?> registationGamerApi(GamerDTO.GamerRegistationDTO gamerRegistationDTO) throws IllegalStateException{;
         System.out.println("gamerRegistationDTO.getGameUsername() = " + gamerRegistationDTO.getGameUsername());
+        System.out.println("LocalDateTime.now() = " + LocalDateTime.now());
         boolean nameCheck = gameNameCheckApi(gamerRegistationDTO.getGame());
 //        if (nameCheck) {
         String username = securityUtil.returnLoginMemberInfo();

@@ -44,7 +44,8 @@ public class MemberService {
     }
 
     public List<Member> MemberListApi(){
-        return memberRepository.findAll();
+        List<Member> all = memberRepository.findAll();
+        return all;
     }
 
 

@@ -1,5 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import sideproject.junior.gamego.model.dto.MemberDTO;
@@ -35,12 +36,15 @@ public class Member extends BaseEntity{
     @JoinColumn(name = "alarmId")
     private Alarm alarm;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<CommunityBoard> communityBoards;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<Heart> hearts;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<ChatRoomJoinMember> chatRoomJoinMembers;
 
@@ -86,5 +90,13 @@ public class Member extends BaseEntity{
 
     public void encodeToPassword(PasswordEncoder passwordEncoder){
         this.password=passwordEncoder.encode(password);
+    }
+
+    public MemberDTO toDTO(){
+        return MemberDTO.builder()
+                .id(this.id)
+                .username(this.username)
+                .nickname(this.nickname)
+                .build();
     }
 }

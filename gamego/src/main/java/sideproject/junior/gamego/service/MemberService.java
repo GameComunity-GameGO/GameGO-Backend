@@ -48,6 +48,10 @@ public class MemberService {
         return all;
     }
 
+    public Member memberStateApi(Long id){
+        Optional<Member> findMember = memberRepository.findById(id);
+        return findMember.get();
+    }
 
     @Transactional
     public String MemberStateChangeApi(MemberDTO.ChangeStateDTO changeStateDTO){

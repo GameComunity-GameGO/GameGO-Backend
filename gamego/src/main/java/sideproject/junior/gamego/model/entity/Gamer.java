@@ -1,5 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -27,9 +28,11 @@ public class Gamer extends BaseEntity{
     @OneToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "gamer")
     private List<Game> game;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "gamer")
     private List<HashTag> hashTags;
 

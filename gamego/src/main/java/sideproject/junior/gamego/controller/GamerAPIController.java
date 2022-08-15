@@ -33,8 +33,8 @@ public class GamerAPIController {
 
     @PostMapping("/gamer")
     public ResponseEntity<?> gamerRegistation(@RequestBody  GamerDTO.GamerRegistationDTO gamerRegistationDTO){
-        gamerService.registationGamerApi(gamerRegistationDTO);
-        return new ResponseEntity<>("게이머등록 API 성공",HttpStatus.OK);
+        ResponseEntity<?> responseEntity = gamerService.registationGamerApi(gamerRegistationDTO);
+        return new ResponseEntity<>(responseEntity,HttpStatus.OK);
     }
 
     @DeleteMapping("/gamer/{id}")

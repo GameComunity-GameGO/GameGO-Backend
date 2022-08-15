@@ -1,18 +1,23 @@
 package sideproject.junior.gamego.model.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.model.entity.Role;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {
+
+    private Long id;
+
+    private String username;
+
+    private String nickname;
 
     @Getter
     @Setter

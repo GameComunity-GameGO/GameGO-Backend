@@ -27,6 +27,12 @@ public class MemberAPIController {
         return new ResponseEntity<>(members,HttpStatus.OK);
     }
 
+    @GetMapping("/member/{username}")
+    public ResponseEntity<Member> memberState(@PathVariable String username){
+        Member member = memberService.memberStateApi(username);
+        return new ResponseEntity<>(member,HttpStatus.OK);
+    }
+
     @PostMapping("/member")
     public ResponseEntity<?> signup(@RequestBody MemberDTO.SignUpDTO signUpDTO){
         log.info("회원가입");

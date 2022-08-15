@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import sideproject.junior.gamego.exception.member.MemberException;
 import sideproject.junior.gamego.exception.member.MemberExceptionType;
 import sideproject.junior.gamego.model.dto.MemberDTO;
@@ -48,6 +49,10 @@ public class MemberService {
         return all;
     }
 
+    public Member memberStateApi(String username){
+        Optional<Member> findMember = memberRepository.findByUsername(username);
+        return findMember.get();
+    }
 
     @Transactional
     public String MemberStateChangeApi(MemberDTO.ChangeStateDTO changeStateDTO){

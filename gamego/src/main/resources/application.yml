@@ -9,9 +9,9 @@ cloud:
 
 spring:
   datasource:
-    url: ${db.url}
-    username: ${db.id}
-    password: ${db.pw} #커밋용주석
+    url: jdbc:mariadb://gamego.c9d71oyl8as0.ap-northeast-2.rds.amazonaws.com:3306/gamego?useUnicode=yes&characterEncoding=UTF-8
+    username: root
+    password: lsh6451217 #커밋용주석
     driver-class-name: org.mariadb.jdbc.Driver
 
 

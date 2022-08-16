@@ -40,6 +40,7 @@ public class GamerService {
         List<Gamer> returnList=new ArrayList<>();
         for (Gamer gamer:all){
             boolean regiExpried = setTimeList(gamer.getCreatedDate());
+            System.out.println("regiExpried = " + regiExpried);
             if (regiExpried==false){
                 gamer.setRegiTimeExpired();
             }
@@ -122,7 +123,7 @@ public class GamerService {
         int day = Integer.parseInt(LocalDateTime.now().toString().substring(8, 10));
         int hours = Integer.parseInt(LocalDateTime.now().toString().substring(11, 13));
         int minute = Integer.parseInt(LocalDateTime.now().toString().substring(14, 16));
-//        System.out.println(year+""+month+""+day+""+hours+""+minute);
+        System.out.println(year+""+month+""+day+""+hours+""+minute);
         int now = year + month + day + minute + hours;
 //        System.out.println("now = " + now);
         int year2 = Integer.parseInt(dbTime.toString().substring(0, 4));
@@ -130,8 +131,14 @@ public class GamerService {
         int day2 = Integer.parseInt(dbTime.toString().substring(8, 10));
         int hours2 = Integer.parseInt(dbTime.toString().substring(11, 13));
         int minute2 = Integer.parseInt(dbTime.toString().substring(14, 16));
+        System.out.println(year2+""+month2+""+day2+""+hours2+""+minute2);
         int db = year2 + month2 + day2 + minute2 + hours2;
-        if (now-db<=30) return true;
+        System.out.println("now = " + now);
+        System.out.println("db = " + db);
+        if (year==year2&&month==month2&&day==day2&&hours==hours2){
+            if (minute-minute2>=0&&minute-minute2<=30) return true;
+            else return false;
+        }
         else return false;
     }
 }

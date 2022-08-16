@@ -56,7 +56,7 @@ public class ReplyService {
 
     public boolean deleteReply(Long memberId, Long replyId) {
 
-        if(Objects.equals(memberId, replyRepository.findById(replyId).get().getId())){
+        if(Objects.equals(memberId, replyRepository.findById(replyId).get().getMember().getId())){
             replyRepository.deleteById(replyId);
             return true;
         }else{

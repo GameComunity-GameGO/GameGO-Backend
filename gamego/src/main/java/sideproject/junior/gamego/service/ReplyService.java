@@ -1,6 +1,7 @@
 package sideproject.junior.gamego.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Log4j2
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
@@ -31,14 +33,14 @@ public class ReplyService {
                 .member(member)
                 .build());
 
+        log.info("reply_content = " + replyRepository.findAllByCommunityBoardId(boardId).get(0).getContent());
+
         return replyRepository.findAllByCommunityBoardId(boardId).stream().map(Reply::toDTO).collect(Collectors.toList());
     }
 
     public ReplyDTO updateReply(Long replyId, Long memberId, String content) {
 
         Reply reply = replyRepository.findById(replyId).get();
-
-        Member member = memberRepository.findById(memberId).get();
 
         if (Objects.equals(reply.getMember().getId(), memberId)){
             Reply updateReply = reply.update(content);
@@ -50,7 +52,7 @@ public class ReplyService {
 
     public boolean deleteReply(Long memberId, Long replyId) {
 
-        if(memberId == replyRepository.findById(replyId).get().getId()){
+        if(Objects.equals(memberId, replyRepository.findById(replyId).get().getId())){
             replyRepository.deleteById(replyId);
             return true;
         }else{

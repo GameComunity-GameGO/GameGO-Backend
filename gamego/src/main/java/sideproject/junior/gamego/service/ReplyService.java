@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
 import sideproject.junior.gamego.model.dto.reply.RequestReplyDTO;
+import sideproject.junior.gamego.model.entity.CommunityBoard;
 import sideproject.junior.gamego.model.entity.Member;
 import sideproject.junior.gamego.model.entity.Reply;
 import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.repository.ReplyRepository;
+import sideproject.junior.gamego.repository.board.BoardRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,17 +25,19 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
 
     public List<ReplyDTO> createReply(Long memberId, RequestReplyDTO dto, Long boardId) {
 
         Member member = memberRepository.findById(memberId).get();
 
+        CommunityBoard board = boardRepository.findById(boardId).get();
+
         replyRepository.save(Reply.builder()
                 .content(dto.getContent())
+                .communityBoard(board)
                 .member(member)
                 .build());
-
-        log.info("reply_content = " + replyRepository.findAllByCommunityBoardId(boardId).get(0).getContent());
 
         return replyRepository.findAllByCommunityBoardId(boardId).stream().map(Reply::toDTO).collect(Collectors.toList());
     }

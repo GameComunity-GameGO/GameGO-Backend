@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sideproject.junior.gamego.model.dto.MemberDTO;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,4 +20,7 @@ public class ReplyDTO {
 
     private MemberDTO memberDTO;
 
+    private LocalDateTime createdDate;
+
+    private LocalDateTime lastModifiedDate;
 }

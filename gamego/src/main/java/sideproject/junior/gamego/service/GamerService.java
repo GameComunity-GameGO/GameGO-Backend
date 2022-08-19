@@ -16,10 +16,12 @@ import sideproject.junior.gamego.model.entity.RegiTime;
 import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.repository.GamerRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 @Log4j2
@@ -35,6 +37,7 @@ public class GamerService {
 
     private final GameService gameService;
 
+    @Transactional
     public List<Gamer> getGamerListApi(){
         List<Gamer> all = gamerRepository.findAll();
         List<Gamer> returnList=new ArrayList<>();

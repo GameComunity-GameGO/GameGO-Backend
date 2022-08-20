@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sideproject.junior.gamego.exception.member.MemberException;
-import sideproject.junior.gamego.exception.member.MemberExceptionType;
 import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.service.SignUpService;
 

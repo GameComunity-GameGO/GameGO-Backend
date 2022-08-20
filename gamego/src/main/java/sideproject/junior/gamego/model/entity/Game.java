@@ -1,9 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -28,4 +25,16 @@ public class Game {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gamerId")
     private Gamer gamer;
+
+    @Builder
+    public Game(String name, String content, Gamer gamer) {
+        this.name = name;
+        this.content = content;
+        this.gamer = gamer;
+    }
+
+    public void setChangeState(String name,String content){
+        this.name=name;
+        this.content=content;
+    }
 }

@@ -32,13 +32,14 @@ public class GamerAPIController {
     }
 
     @PostMapping("/gamer")
-    public ResponseEntity<?> gamerRegistation(GamerDTO.GamerRegistationDTO gamerRegistationDTO){
-        gamerService.registationGamerApi(gamerRegistationDTO);
-        return new ResponseEntity<>("게이머등록 API 성공",HttpStatus.OK);
+    public ResponseEntity<?> gamerRegistation(@RequestBody  GamerDTO.GamerRegistationDTO gamerRegistationDTO){
+        ResponseEntity<?> responseEntity = gamerService.registationGamerApi(gamerRegistationDTO);
+        return new ResponseEntity<>(responseEntity,HttpStatus.OK);
     }
 
     @DeleteMapping("/gamer/{id}")
     public ResponseEntity<?> gamerDelete(@PathVariable Long id){
         gamerService.deleteGamerApi(id);
+        return new ResponseEntity<>("회원 삭제 API 완료",HttpStatus.OK);
     }
 }

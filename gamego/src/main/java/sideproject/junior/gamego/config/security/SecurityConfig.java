@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web){
-        web.ignoring().antMatchers("/swagger/**","/webjars/**","/css/**","/js/**");
+        web.ignoring().antMatchers("/swagger-ui/**","/webjars/**","/css/**","/js/**","/v2/api-docs","/v3/api-docs" ,"/configuration/ui",
+                "/swagger-resources/**", "/configuration/security",
+                "/swagger-ui.html", "/webjars/**","/swagger/**");
     }
 
     @Override
@@ -54,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/SignUp/**","/api/v1/member","/api/v1/login","/api/v1/accessToken").permitAll()
+                .antMatchers("/api/v1/SignUp/**","/api/v1/member","/api/v1/login","/api/v1/accessToken","/v3/api-docs","/swagger/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated();
 

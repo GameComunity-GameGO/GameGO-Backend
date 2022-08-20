@@ -12,13 +12,16 @@ import sideproject.junior.gamego.exception.gamer.GamerExceptionType;
 import sideproject.junior.gamego.model.dto.GamerDTO;
 import sideproject.junior.gamego.model.entity.Gamer;
 import sideproject.junior.gamego.model.entity.Member;
+import sideproject.junior.gamego.model.entity.RegiTime;
 import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.repository.GamerRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 @Log4j2
@@ -34,15 +37,17 @@ public class GamerService {
 
     private final GameService gameService;
 
+    @Transactional
     public List<Gamer> getGamerListApi(){
-        int currentTime = Integer.parseInt(LocalDateTime.now().toString().substring(11, 13));
         List<Gamer> all = gamerRepository.findAll();
         List<Gamer> returnList=new ArrayList<>();
         for (Gamer gamer:all){
-            int dbTime = Integer.parseInt(gamer.getMember().getCreatedDate().toString().substring(11, 13));
-            if (currentTime-dbTime<30){
-                returnList.add(gamer);
+            boolean regiExpried = setTimeList(gamer.getCreatedDate());
+            System.out.println("regiExpried = " + regiExpried);
+            if (regiExpried==false){
+                gamer.setRegiTimeExpired();
             }
+            returnList.add(gamer);
         }
         return returnList;
     }
@@ -64,6 +69,7 @@ public class GamerService {
         boolean alreadyRegis = alreadyGamerRegistation(findMember);
         if (alreadyRegis){
             gamerRegistationDTO.setMember(findMember);
+            gamerRegistationDTO.setRegiTime(RegiTime.HALF);
             Gamer entity = gamerRegistationDTO.toEntity();
             gamerRepository.save(entity);
             return new ResponseEntity<>("게이머 등록 API 성공!",HttpStatus.OK);
@@ -112,5 +118,30 @@ public class GamerService {
             Optional<Gamer> findGamer = gamerRepository.findByMember(member);
             gamerRepository.delete(findGamer.get());
         }
+    }
+
+    public boolean setTimeList(LocalDateTime dbTime){
+        int year = Integer.parseInt(LocalDateTime.now().toString().substring(0, 4));
+        int month = Integer.parseInt(LocalDateTime.now().toString().substring(6, 7));
+        int day = Integer.parseInt(LocalDateTime.now().toString().substring(8, 10));
+        int hours = Integer.parseInt(LocalDateTime.now().toString().substring(11, 13));
+        int minute = Integer.parseInt(LocalDateTime.now().toString().substring(14, 16));
+        System.out.println(year+""+month+""+day+""+hours+""+minute);
+        int now = year + month + day + minute + hours;
+//        System.out.println("now = " + now);
+        int year2 = Integer.parseInt(dbTime.toString().substring(0, 4));
+        int month2 = Integer.parseInt(dbTime.toString().substring(6, 7));
+        int day2 = Integer.parseInt(dbTime.toString().substring(8, 10));
+        int hours2 = Integer.parseInt(dbTime.toString().substring(11, 13));
+        int minute2 = Integer.parseInt(dbTime.toString().substring(14, 16));
+        System.out.println(year2+""+month2+""+day2+""+hours2+""+minute2);
+        int db = year2 + month2 + day2 + minute2 + hours2;
+        System.out.println("now = " + now);
+        System.out.println("db = " + db);
+        if (year==year2&&month==month2&&day==day2&&hours==hours2){
+            if (minute-minute2>=0&&minute-minute2<=30) return true;
+            else return false;
+        }
+        else return false;
     }
 }

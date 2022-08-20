@@ -32,6 +32,8 @@ public class Reply extends BaseEntity {
                 .id(this.id)
                 .content(this.content)
                 .memberDTO(this.member.toDTO())
+                .createdDate(this.createdDate)
+                .lastModifiedDate(this.lastModifiedDate)
                 .build();
     }
 

@@ -24,6 +24,10 @@ public class Gamer extends BaseEntity{
     @Column(name = "introduction")
     private String introdution;
 
+    @Column(name = "regiTime")
+    @Enumerated(EnumType.STRING)
+    private RegiTime regiTime;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -37,13 +41,18 @@ public class Gamer extends BaseEntity{
     private List<HashTag> hashTags;
 
     @Builder
-    public Gamer(String gameUsername, String introdution, Member member, List<HashTag> hashTags) {
+    public Gamer(String gameUsername, String introdution,RegiTime regiTime, Member member, List<HashTag> hashTags) {
         this.gameUsername = gameUsername;
         this.introdution = introdution;
+        this.regiTime=regiTime;
         this.member = member;
         this.hashTags = hashTags;
     }
 
     public void setGame(String game){
+    }
+
+    public void setRegiTimeExpired(){
+        this.regiTime=RegiTime.EXPIRED;
     }
 }

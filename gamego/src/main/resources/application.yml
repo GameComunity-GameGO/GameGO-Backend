@@ -1,19 +1,16 @@
-cloud:
-  aws:
-    stack:
-      auto: false
-    s3:
-      bucket: game-go
-    region:
-      static: ap-northeast-2
-
 spring:
+  profiles:
+    include: jwt
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: ${jdbc-url}
+#    username: ${username}
+#    password: ${password}
   datasource:
-    url: jdbc:mariadb://gamego.c9d71oyl8as0.ap-northeast-2.rds.amazonaws.com:3306/gamego?useUnicode=yes&characterEncoding=UTF-8
-    username: root
-    password: lsh6451217 #커밋용주석
+    url: ${jdbc-url}
     driver-class-name: org.mariadb.jdbc.Driver
-
+    username: ${username}
+    password: ${password}
 
   #  redis:
   #    host: localhost
@@ -26,7 +23,6 @@ spring:
 #        max-active: 8
 #        max-wait: -1
 
-
   jpa:
     properties:
       hibernate:
@@ -36,11 +32,27 @@ spring:
 
     hibernate:
       ddl-auto: update
+      temp:
+        use_jdbc_metadata_defaults: false
     generate-ddl: true
-  profiles:
-    include: jwt
+
 
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    s3:
+      bucket: game-go
+    region:
+      static: ap-northeast-2
+
+aws:
+  secretsmanager:
+    name: gamego
+    enabled: true

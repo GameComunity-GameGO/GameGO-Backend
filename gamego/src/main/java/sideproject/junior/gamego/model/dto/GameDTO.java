@@ -24,4 +24,12 @@ public class GameDTO {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class ChangeStateDTO{
+        private String name;
+        private String content;
+    }
 }

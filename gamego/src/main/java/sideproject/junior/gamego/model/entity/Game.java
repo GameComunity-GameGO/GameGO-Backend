@@ -32,4 +32,9 @@ public class Game {
         this.content = content;
         this.gamer = gamer;
     }
+
+    public void setChangeState(String name,String content){
+        this.name=name;
+        this.content=content;
+    }
 }

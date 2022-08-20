@@ -43,8 +43,40 @@ public class GameService {
     public ResponseEntity<?> gameRegistrationApi(GameDTO.RegistrationDTO registrationDTO){
         if (registrationDTO.getName()==null||registrationDTO.getContent()==null) return new ResponseEntity<>(new GameException(GameExceptionType.NAME_OR_CONTENT_NULL), HttpStatus.OK);
         else {
-            registrationDTO.toEntity();
+            Game gameEntity = registrationDTO.toEntity();
+            gameRepository.save(gameEntity);
             return new ResponseEntity<>("게임 등록 API 성공!",HttpStatus.OK);
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<?> changeStateApi(Long id,GameDTO.ChangeStateDTO changeStateDTO){
+        if(id==null||changeStateDTO.getName()==null||changeStateDTO.getContent()==null){
+            return new ResponseEntity<>(new GameException(GameExceptionType.CHANGE_API_REQUEST_NULL),HttpStatus.OK);
+        }else {
+            Optional<Game> findGame = gameRepository.findById(id);
+            if (findGame.isPresent()){
+                findGame.get().setChangeState(changeStateDTO.getName(), changeStateDTO.getContent());
+                return new ResponseEntity<>("게임 변경 API 완료!",HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("게임 변경 API 호출 실패!",HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
+
+    @Transactional
+    public ResponseEntity<?> deleteGameApi(Long id) {
+        if (id==null){
+            return new ResponseEntity<>(new GameException(GameExceptionType.DELETE_API_REQUEST_NULL),HttpStatus.OK);
+        }else {
+            Optional<Game> findGame = gameRepository.findById(id);
+            if (findGame.isPresent()){
+                gameRepository.delete(findGame.get());
+                return new ResponseEntity<>("게임 삭제 API 성공!",HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("게임 삭제 API 실패!",HttpStatus.OK);
+            }
         }
     }
 }

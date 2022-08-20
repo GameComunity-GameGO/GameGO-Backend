@@ -37,4 +37,15 @@ public class GameController {
         return returnResponse;
     }
 
+    @PutMapping("/game/{id}")
+    public ResponseEntity<?> changeStateApi(@PathVariable Long id,@RequestBody GameDTO.ChangeStateDTO changeStateDTO){
+        ResponseEntity<?> returnResponse = gameService.changeStateApi(id, changeStateDTO);
+        return returnResponse;
+    }
+
+    @DeleteMapping("/game/{id}")
+    public ResponseEntity<?> deleteGameApi(@PathVariable Long id){
+        ResponseEntity<?> returnResponse = gameService.deleteGameApi(id);
+        return returnResponse;
+    }
 }

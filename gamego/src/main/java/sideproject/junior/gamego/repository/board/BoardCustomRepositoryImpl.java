@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 import sideproject.junior.gamego.model.entity.CommunityBoard;
 import sideproject.junior.gamego.model.entity.QMember;
+import sideproject.junior.gamego.model.entity.QUnlike;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -17,6 +18,7 @@ import static sideproject.junior.gamego.model.entity.QImages.images;
 import static sideproject.junior.gamego.model.entity.QLikes.likes;
 import static sideproject.junior.gamego.model.entity.QMember.*;
 import static sideproject.junior.gamego.model.entity.QReply.reply;
+import static sideproject.junior.gamego.model.entity.QUnlike.*;
 
 public class BoardCustomRepositoryImpl implements BoardCustomRepository{
 
@@ -51,6 +53,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository{
                 .leftJoin(communityBoard.replyList, reply)
                 .leftJoin(communityBoard.imageList, images)
                 .leftJoin(communityBoard.likes, likes)
+                .leftJoin(communityBoard.unlike, unlike)
                 .leftJoin(communityBoard.member, member)
                 .fetchOne();
     }

@@ -1,4 +1,3 @@
-/*
 package sideproject.junior.gamego.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -12,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AwsS3Config {
 
-    @Value("${cloud.aws.credentials.access-key}")
+    @Value("${ackey}")
     private String accessKey;
 
-    @Value("${cloud.aws.credentials.secret-key}")
+    @Value("${sckey}")
     private String secretKey;
 
     @Value("${cloud.aws.region.static}")
@@ -32,4 +31,3 @@ public class AwsS3Config {
                 .build();
     }
 }
-*/

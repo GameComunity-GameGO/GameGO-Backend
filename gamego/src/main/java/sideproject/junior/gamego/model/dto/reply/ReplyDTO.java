@@ -20,6 +20,8 @@ public class ReplyDTO {
 
     private MemberDTO memberDTO;
 
+    private int checkMyReply;
+    
     private LocalDateTime createdDate;
 
     private LocalDateTime lastModifiedDate;

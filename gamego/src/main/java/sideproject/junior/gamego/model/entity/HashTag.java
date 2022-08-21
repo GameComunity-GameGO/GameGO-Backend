@@ -1,9 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -30,4 +27,10 @@ public class HashTag {
     @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
 
+    @Builder
+    public HashTag(String name, Gamer gamer, ChatRoom chatRoom) {
+        this.name = name;
+        this.gamer = gamer;
+        this.chatRoom = chatRoom;
+    }
 }

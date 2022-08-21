@@ -104,6 +104,7 @@ public class BoardService {
 
         if(Objects.equals(boardRepository.findById(boardId).get().getMember().getId(), memberId)) {
 
+
             imagesRepository.deleteImagesByCommunityBoardId(boardId);
 
             boardRepository.deleteById(boardId);

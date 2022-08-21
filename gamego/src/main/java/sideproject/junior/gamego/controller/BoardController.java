@@ -38,11 +38,13 @@ public class BoardController {
 
         Long memberId = securityUtil.getMemberId();
 
-        ResponseBoardDTO board = boardService.getBoard(Long.parseLong(id));
+        ResponseBoardDTO board = boardService.getBoard(Long.parseLong(id), memberId);
 
         int check = likesService.checkLike(memberId, id);
+        int unlikeCheck = likesService.checkULike(memberId, id);
 
         board.setCheckLikes(check);
+        board.setCheckUnlike(unlikeCheck);
 
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
@@ -123,6 +125,30 @@ public class BoardController {
 
         if(boardLikeCount == 1) {
             return new ResponseEntity<>(boardLikeCount, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("이미 좋아요를 취소하였습니다", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/board/{id}/unLike")
+    public ResponseEntity<?> boardUnlike(@PathVariable String id){
+
+        Long memberId = securityUtil.getMemberId();
+
+        int boardUnlikeCount = likesService.boardUnlike(Long.parseLong(id), memberId);
+
+        return new ResponseEntity<>(boardUnlikeCount, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/board/{id}/unLike")
+    public ResponseEntity<?> boardUnlikeDelete(@PathVariable String id){
+
+        Long memberId = securityUtil.getMemberId();
+
+        int boardUnlikeCount = likesService.boardUnlikeDelete(Long.parseLong(id), memberId);
+
+        if(boardUnlikeCount == 1) {
+            return new ResponseEntity<>(boardUnlikeCount, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("이미 좋아요를 취소하였습니다", HttpStatus.BAD_REQUEST);
         }

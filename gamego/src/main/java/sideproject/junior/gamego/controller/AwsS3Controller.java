@@ -1,4 +1,3 @@
-/*
 package sideproject.junior.gamego.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -59,4 +58,3 @@ public class AwsS3Controller {
         return ResponseEntity.ok(null);
     }
 }
-*/

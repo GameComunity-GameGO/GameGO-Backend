@@ -8,12 +8,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.board.RequestBoardDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
+import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
 import sideproject.junior.gamego.model.entity.Category;
 import sideproject.junior.gamego.model.entity.CommunityBoard;
 import sideproject.junior.gamego.model.entity.Member;
+import sideproject.junior.gamego.model.entity.Reply;
 import sideproject.junior.gamego.repository.ImagesRepository;
 import sideproject.junior.gamego.repository.MemberRepository;
+import sideproject.junior.gamego.repository.ReplyRepository;
 import sideproject.junior.gamego.repository.board.BoardRepository;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -25,14 +31,27 @@ public class BoardService {
     private final CategoryService categoryService;
     private final ImagesRepository imagesRepository;
     private final MemberRepository memberRepository;
+    private final ReplyRepository replyRepository;
 
     public Page<ResponseBoardDTO> getBoardList(Pageable pageable) {
 
         return boardRepository.getBoardList(pageable);
     }
 
-    public ResponseBoardDTO getBoard(Long boardId){
-        return boardRepository.getBoard(boardId).toDTO();
+    public ResponseBoardDTO getBoard(Long boardId, Long memberId){
+
+        ResponseBoardDTO responseBoardDTO = boardRepository.getBoard(boardId).toDTO();
+
+        List<Reply> replyList = replyRepository.findAllByCommunityBoardId(boardId);
+
+        for (Reply reply : replyList) {
+            if(reply.getMember().getId().equals(memberId)){
+                ReplyDTO myReply = responseBoardDTO.getReplyList().stream().filter(replyDTO -> replyDTO.getId().equals(reply.getId())).findAny().get();
+                myReply.setCheckMyReply(1);
+            }
+        }
+
+        return responseBoardDTO;
     }
 
     public ResponseBoardDTO createBoard(Long memberId, RequestBoardDTO dto) {
@@ -67,7 +86,7 @@ public class BoardService {
 
         CommunityBoard getBoard = boardRepository.findById(boarId).get();
 
-        if(getBoard.getMember().getId() == memberId) {
+        if(Objects.equals(getBoard.getMember().getId(), memberId)) {
 
             String category = dto.getCategory();
 
@@ -83,7 +102,7 @@ public class BoardService {
 
     public int deleteBoard(Long boardId, Long memberId) {
 
-        if(boardRepository.findById(boardId).get().getMember().getId() == memberId) {
+        if(Objects.equals(boardRepository.findById(boardId).get().getMember().getId(), memberId)) {
 
             imagesRepository.deleteImagesByCommunityBoardId(boardId);
 

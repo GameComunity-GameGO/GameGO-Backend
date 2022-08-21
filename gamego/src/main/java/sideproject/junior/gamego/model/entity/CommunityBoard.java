@@ -1,7 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
 import lombok.*;
-import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 
 import javax.persistence.*;
@@ -44,6 +43,10 @@ public class CommunityBoard extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
+    private List<Unlike> unlike = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
     private List<Reply> replyList = new ArrayList<>();
 
     @Builder.Default
@@ -57,11 +60,12 @@ public class CommunityBoard extends BaseEntity {
                 .contents(this.contents)
                 .category(this.category.getTitle())
                 .likes(this.likes.stream().map(Likes::toDTO).collect(Collectors.toList()))
+                .unlike(this.unlike.stream().map(Unlike::toDTO).collect(Collectors.toList()))
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
                 .memberDTO(this.member.toDTO())
-                .createdDate(this.getCreatedDate())
-                .lastModifiedDate(this.getLastModifiedDate())
+                .createdDate(this.createdDate)
+                .lastModifiedDate(this.lastModifiedDate)
                 .build();
     }
 
@@ -84,11 +88,12 @@ public class CommunityBoard extends BaseEntity {
                 .contents(this.contents)
                 .category(this.category.getTitle())
                 .likes(this.likes.stream().map(Likes::toDTO).collect(Collectors.toList()))
+                .unlike(this.unlike.stream().map(Unlike::toDTO).collect(Collectors.toList()))
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
                 .imageList(this.imageList.stream().map(Images::toDTO).collect(Collectors.toList()))
                 .memberDTO(member.toDTO())
-                .createdDate(this.getCreatedDate())
-                .lastModifiedDate(this.getLastModifiedDate())
+                .createdDate(this.createdDate)
+                .lastModifiedDate(this.lastModifiedDate)
                 .build();
     }
 }

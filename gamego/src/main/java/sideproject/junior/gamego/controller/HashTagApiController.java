@@ -15,7 +15,7 @@ import java.util.List;
 @Log4j2
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class HashTagController {
+public class HashTagApiController {
 
     private final HashTagService hashTagService;
 

@@ -21,6 +21,7 @@ public class GamerDTO {
         private String game;
         private Member member;
         private RegiTime regiTime;
+        private String hashTag;
 
         public Gamer toEntity(){
             return Gamer.builder()

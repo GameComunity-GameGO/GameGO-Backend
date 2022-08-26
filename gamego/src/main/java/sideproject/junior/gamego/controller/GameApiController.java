@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Log4j2
 @RequestMapping("/api/v1")
-public class GameController {
+public class GameApiController {
 
     private final GameService gameService;
 

@@ -2,11 +2,11 @@ spring:
   profiles:
     include: jwt
 #  datasource:
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    url: ${jdbc-url}
-#    username: ${username}
-#    password: ${password}
   datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${jdbc-url}
+    username: ${username}
+    password: ${password}
     
   #  redis:
   #    host: localhost

@@ -41,6 +41,9 @@ spring:
 
 cloud:
   aws:
+#    credentials:
+#      accessKey:
+#      secret-key:
     stack:
       auto: false
     s3:

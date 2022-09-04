@@ -37,6 +37,10 @@ public class CommunityBoard extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "boardType_id")
+    private BoardType type;
+
     @Builder.Default
     @OneToMany(mappedBy = "communityBoard",cascade = CascadeType.ALL)
     private List<Likes> likes = new ArrayList<>();
@@ -59,6 +63,7 @@ public class CommunityBoard extends BaseEntity {
                 .title(this.title)
                 .contents(this.contents)
                 .category(this.category.getTitle())
+                .type(this.type.getTitle())
                 .likes(this.likes.stream().map(Likes::toDTO).collect(Collectors.toList()))
                 .unlike(this.unlike.stream().map(Unlike::toDTO).collect(Collectors.toList()))
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))
@@ -69,10 +74,11 @@ public class CommunityBoard extends BaseEntity {
                 .build();
     }
 
-    public CommunityBoard update(String title, String contents, Category category){
+    public CommunityBoard update(String title, String contents, Category category, BoardType type){
         this.title = title;
         this.contents = contents;
         this.category = category;
+        this.type = type;
 
         return this;
     }
@@ -87,6 +93,7 @@ public class CommunityBoard extends BaseEntity {
                 .title(this.title)
                 .contents(this.contents)
                 .category(this.category.getTitle())
+                .type(this.type.getTitle())
                 .likes(this.likes.stream().map(Likes::toDTO).collect(Collectors.toList()))
                 .unlike(this.unlike.stream().map(Unlike::toDTO).collect(Collectors.toList()))
                 .replyList(this.replyList.stream().map(Reply::toDTO).collect(Collectors.toList()))

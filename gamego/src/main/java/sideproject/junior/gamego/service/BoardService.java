@@ -9,10 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.dto.board.RequestBoardDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
-import sideproject.junior.gamego.model.entity.Category;
-import sideproject.junior.gamego.model.entity.CommunityBoard;
-import sideproject.junior.gamego.model.entity.Member;
-import sideproject.junior.gamego.model.entity.Reply;
+import sideproject.junior.gamego.model.entity.*;
 import sideproject.junior.gamego.repository.ImagesRepository;
 import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.repository.ReplyRepository;
@@ -38,6 +35,11 @@ public class BoardService {
         return boardRepository.getBoardList(pageable);
     }
 
+    public Page<ResponseBoardDTO> getPopularBoardList(Pageable pageable) {
+
+        return boardRepository.getPopularBoardList(pageable);
+    }
+
     public ResponseBoardDTO getBoard(Long boardId, Long memberId){
 
         ResponseBoardDTO responseBoardDTO = boardRepository.getBoard(boardId).toDTO();
@@ -60,11 +62,14 @@ public class BoardService {
 
         String category = dto.getCategory();
 
+        String type = dto.getType();
+
         Member member = memberRepository.findById(memberId).get();
 
         log.info("BoardService.createBoard - member = " + member.getId());
 
         Category getCategory = categoryService.getCategory(category);
+        BoardType boardType = categoryService.getType(type);
 
         log.info("BoardService.createBoard - category = " + getCategory.getTitle());
 
@@ -73,6 +78,7 @@ public class BoardService {
                 .contents(dto.getContents())
                 .member(member)
                 .category(getCategory)
+                .type(boardType)
                 .build();
 
         CommunityBoard board = boardRepository.save(createBoard);
@@ -89,10 +95,12 @@ public class BoardService {
         if(Objects.equals(getBoard.getMember().getId(), memberId)) {
 
             String category = dto.getCategory();
+            String type = dto.getType();
 
             Category getCategory = categoryService.getCategory(category);
+            BoardType boardType = categoryService.getType(type);
 
-            CommunityBoard updateBoard = getBoard.update(dto.getTitle(), dto.getContents(), getCategory);
+            CommunityBoard updateBoard = getBoard.update(dto.getTitle(), dto.getContents(), getCategory, boardType);
 
             return updateBoard.toDTO();
         }else{

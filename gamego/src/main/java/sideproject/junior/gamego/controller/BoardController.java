@@ -33,6 +33,14 @@ public class BoardController {
         return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
+    @GetMapping("/board/popular")
+    public ResponseEntity<?> getPopularBoardList(@PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.ASC) Pageable pageable){
+
+        Page<ResponseBoardDTO> boardList = boardService.getPopularBoardList(pageable);
+
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
+
     @GetMapping("/board/{id}")
     public ResponseEntity<?> getBoard(@PathVariable String id){
 

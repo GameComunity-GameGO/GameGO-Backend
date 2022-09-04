@@ -45,6 +45,23 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository{
     }
 
     @Override
+    public Page<ResponseBoardDTO> getPopularBoardList(Pageable pageable) {
+
+        List<CommunityBoard> queryResult = queryFactory
+                .selectFrom(communityBoard)
+                .where(communityBoard.likes.size().goe(2))
+                .leftJoin(communityBoard.member, member)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(communityBoard.createdDate.desc())
+                .fetch();
+
+        List<ResponseBoardDTO> result = queryResult.stream().map(CommunityBoard::toDTO).collect(Collectors.toList());
+
+        return new PageImpl<>(result, pageable, result.size());
+    }
+
+    @Override
     public CommunityBoard getBoard(Long boardId){
 
         return queryFactory

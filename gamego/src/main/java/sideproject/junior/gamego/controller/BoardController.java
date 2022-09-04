@@ -33,6 +33,14 @@ public class BoardController {
         return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
+    @GetMapping("/board/popular")
+    public ResponseEntity<?> getPopularBoardList(@PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.ASC) Pageable pageable){
+
+        Page<ResponseBoardDTO> boardList = boardService.getPopularBoardList(pageable);
+
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
+    }
+
     @GetMapping("/board/{id}")
     public ResponseEntity<?> getBoard(@PathVariable String id){
 
@@ -55,14 +63,24 @@ public class BoardController {
         log.info("/api/board 호출 ");
         
         log.info("dto.title = " + dto.getTitle());
-        log.info("dto.contents " + dto.getContents());
-        log.info("dto.category" + dto.getCategory());
-        log.info("dto.imgURL" + dto.getImgUrl());
-
-        log.info("dto.title = " + dto.getTitle());
-        log.info("dto.contents " + dto.getContents());
-        log.info("dto.category" + dto.getCategory());
-        log.info("dto.imgURL" + dto.getImgUrl());
+        log.info("=====================================");
+        log.info("dto.contents = " + dto.getContents());
+        log.info("=====================================");
+        log.info("dto.category = " + dto.getCategory());
+        log.info("=====================================");
+        log.info("dto.imgURL = " + dto.getImgUrl());
+        log.info("=====================================");
+        log.info("dto.type = " + dto.getType());
+      
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
 
         Long memberId = securityUtil.getMemberId();
 
@@ -142,7 +160,15 @@ public class BoardController {
 
     @DeleteMapping("/board/{id}/unLike")
     public ResponseEntity<?> boardUnlikeDelete(@PathVariable String id){
-
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
         Long memberId = securityUtil.getMemberId();
 
         int boardUnlikeCount = likesService.boardUnlikeDelete(Long.parseLong(id), memberId);

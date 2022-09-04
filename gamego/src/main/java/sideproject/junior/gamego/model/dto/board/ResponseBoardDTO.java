@@ -25,6 +25,8 @@ public class ResponseBoardDTO {
 
     private String category;
 
+    private String type;
+
     private List<LikeDTO> likes;
 
     private List<UnlikeDTO> unlike;

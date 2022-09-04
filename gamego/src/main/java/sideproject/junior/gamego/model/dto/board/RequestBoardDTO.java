@@ -14,4 +14,6 @@ public class RequestBoardDTO {
     private String imgUrl;
 
     private String category;
+
+    private String type;
 }

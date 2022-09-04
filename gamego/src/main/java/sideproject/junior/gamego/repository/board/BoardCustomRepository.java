@@ -7,5 +7,6 @@ import sideproject.junior.gamego.model.entity.CommunityBoard;
 
 public interface BoardCustomRepository {
     Page<ResponseBoardDTO> getBoardList(Pageable pageable);
+    Page<ResponseBoardDTO> getPopularBoardList(Pageable pageable);
     CommunityBoard getBoard(Long boardId);
 }

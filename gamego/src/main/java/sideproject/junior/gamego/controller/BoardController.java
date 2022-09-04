@@ -71,12 +71,7 @@ public class BoardController {
         log.info("dto.imgURL = " + dto.getImgUrl());
         log.info("=====================================");
         log.info("dto.type = " + dto.getType());
-        log.info("=====================================");
-        log.info("=====================================");
-        log.info("=====================================");
-        log.info("=====================================");
-        log.info("=====================================");
-        log.info("=====================================");
+      
         log.info("커밋용 주석");
         log.info("커밋용 주석");
         log.info("커밋용 주석");
@@ -165,7 +160,15 @@ public class BoardController {
 
     @DeleteMapping("/board/{id}/unLike")
     public ResponseEntity<?> boardUnlikeDelete(@PathVariable String id){
-
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
         Long memberId = securityUtil.getMemberId();
 
         int boardUnlikeCount = likesService.boardUnlikeDelete(Long.parseLong(id), memberId);

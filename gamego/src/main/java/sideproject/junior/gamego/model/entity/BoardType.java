@@ -20,6 +20,6 @@ public class BoardType extends BaseEntity{
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "boardType",cascade = CascadeType.ALL)
     private List<CommunityBoard> communityBoards;
 }

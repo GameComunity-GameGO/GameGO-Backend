@@ -63,10 +63,29 @@ public class BoardController {
         log.info("/api/board 호출 ");
         
         log.info("dto.title = " + dto.getTitle());
+        log.info("=====================================");
         log.info("dto.contents = " + dto.getContents());
+        log.info("=====================================");
         log.info("dto.category = " + dto.getCategory());
+        log.info("=====================================");
         log.info("dto.imgURL = " + dto.getImgUrl());
+        log.info("=====================================");
         log.info("dto.type = " + dto.getType());
+        log.info("=====================================");
+        log.info("=====================================");
+        log.info("=====================================");
+        log.info("=====================================");
+        log.info("=====================================");
+        log.info("=====================================");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
+        log.info("커밋용 주석");
 
         Long memberId = securityUtil.getMemberId();
 

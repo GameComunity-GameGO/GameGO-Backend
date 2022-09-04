@@ -14,6 +14,6 @@ public class HealthCheck {
     public ResponseEntity<String> healthCheck(){
         log.info("health Check");
         System.out.println("pingpong = " );
-        return new ResponseEntity<>("pong", HttpStatus.OK);
+        return new ResponseEntity<>("ping&pong", HttpStatus.OK);
     }
 }

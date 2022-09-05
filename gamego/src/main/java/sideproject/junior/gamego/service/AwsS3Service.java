@@ -33,11 +33,23 @@ public class AwsS3Service {
     private final BoardRepository boardRepository;
     private final ImagesRepository imagesRepository;
 
-    public List<String> uploadImage(List<MultipartFile> multipartFile) {
-        List<String> fileNameList = new ArrayList<>();
+    public String uploadImage(MultipartFile multipartFile) {
 
         // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
-        multipartFile.forEach(file -> {
+
+        String fileName = multipartFile.getOriginalFilename();
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
+
+        try(InputStream inputStream = multipartFile.getInputStream()) {
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch(IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+        }
+
+        /*multipartFile.forEach(file -> {
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(file.getSize());
@@ -51,9 +63,9 @@ public class AwsS3Service {
             }
 
             fileNameList.add("https://game-go.s3.ap-northeast-2.amazonaws.com/" + fileName);
-        });
+        });*/
 
-        return fileNameList;
+        return "https://game-go.s3.ap-northeast-2.amazonaws.com/" + fileName;
     }
 
     public void deleteImage(String fileName) {
@@ -72,23 +84,21 @@ public class AwsS3Service {
         }
     }
 
-    public void insertBoardImages(Long boardId, List<String> imgURL) {
+    public void insertBoardImages(Long boardId, String imgURL) {
 
         CommunityBoard board = boardRepository.findById(boardId).get();
 
-        for (String url : imgURL) {
             Images image = Images.builder()
                     .communityBoard(board)
-                    .imgURL(url)
+                    .imgURL(imgURL)
                     .build();
 
             Images savedImg = imagesRepository.save(image);
 
             board.insertImage(savedImg);
         }
-    }
 
-    public void updateBoardImages(Long boardId, List<String> imgURL) {
+    public void updateBoardImages(Long boardId, String imgURL) {
 
         if(imagesRepository.findAllByCommunityBoardId(boardId) != null){
             imagesRepository.deleteImagesByCommunityBoardId(boardId);

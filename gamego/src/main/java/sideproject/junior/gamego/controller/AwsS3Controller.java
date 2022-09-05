@@ -17,15 +17,15 @@ public class AwsS3Controller {
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<List<String>> uploadFile(@RequestPart(required = false) List<MultipartFile> multipartFile) {
+    public ResponseEntity<?> uploadFile(@RequestPart(required = false) MultipartFile multipartFile) {
         return ResponseEntity.ok(awsS3Service.uploadImage(multipartFile));
     }
 
     @PostMapping("/board/{id}/images")
-    public ResponseEntity<?> insertBoardImages(@RequestPart List<MultipartFile> multipartFile,
+    public ResponseEntity<?> insertBoardImages(@RequestPart(required = false) MultipartFile multipartFile,
                                                @PathVariable String id){
 
-        List<String> imgURL = awsS3Service.uploadImage(multipartFile);
+        String imgURL = awsS3Service.uploadImage(multipartFile);
 
         awsS3Service.insertBoardImages(Long.parseLong(id), imgURL);
 
@@ -33,10 +33,10 @@ public class AwsS3Controller {
     }
 
     @PutMapping("/board/{id}/images")
-    public ResponseEntity<?> updateBoardImages(@RequestPart List<MultipartFile> multipartFile,
+    public ResponseEntity<?> updateBoardImages(@RequestPart(required = false) MultipartFile multipartFile,
                                                @PathVariable String id){
 
-        List<String> imgURL = awsS3Service.uploadImage(multipartFile);
+        String imgURL = awsS3Service.uploadImage(multipartFile);
 
         awsS3Service.updateBoardImages(Long.parseLong(id), imgURL);
 

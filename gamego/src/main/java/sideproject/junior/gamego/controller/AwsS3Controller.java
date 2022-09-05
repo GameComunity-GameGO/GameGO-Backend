@@ -19,11 +19,11 @@ public class AwsS3Controller {
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<?> uploadFile(@RequestPart(value="file", required = false) MultipartFile multipartFile) {
+    public ResponseEntity<?> uploadFile(@RequestPart(value = "file", required = false) MultipartFile[] multipartFile) {
 
-        log.info("AwsS3Controller.uploadFile 호출 = " + multipartFile.isEmpty());
+        MultipartFile file = multipartFile[0];
 
-        return ResponseEntity.ok(awsS3Service.uploadImage(multipartFile));
+        return ResponseEntity.ok(awsS3Service.uploadImage(file));
     }
 
     @PostMapping("/board/{id}/images")

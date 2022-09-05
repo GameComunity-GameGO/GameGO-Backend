@@ -75,12 +75,6 @@ public class BoardController {
         log.info("커밋용 주석");
         log.info("커밋용 주석");
         log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
 
         Long memberId = securityUtil.getMemberId();
 

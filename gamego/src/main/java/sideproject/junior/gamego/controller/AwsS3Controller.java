@@ -17,7 +17,7 @@ public class AwsS3Controller {
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<List<String>> uploadFile(@RequestPart List<MultipartFile> multipartFile) {
+    public ResponseEntity<List<String>> uploadFile(@RequestPart(required = false) List<MultipartFile> multipartFile) {
         return ResponseEntity.ok(awsS3Service.uploadImage(multipartFile));
     }
 

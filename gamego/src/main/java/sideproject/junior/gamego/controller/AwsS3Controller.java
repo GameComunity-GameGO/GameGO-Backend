@@ -19,7 +19,7 @@ public class AwsS3Controller {
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<?> uploadFile(@RequestPart(value = "file", required = false) MultipartFile[] multipartFile) {
+    public ResponseEntity<Object> uploadFile(/*@RequestPart(value = "file", required = false) */ MultipartFile[] multipartFile) {
 
         MultipartFile file = multipartFile[0];
 

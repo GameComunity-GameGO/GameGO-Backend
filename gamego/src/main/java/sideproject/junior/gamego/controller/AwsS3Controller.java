@@ -19,7 +19,7 @@ public class AwsS3Controller {
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<?> uploadFile(@RequestPart(required = false) MultipartFile multipartFile) {
+    public ResponseEntity<?> uploadFile(@RequestPart(value="file", required = false) MultipartFile multipartFile) {
 
         log.info("AwsS3Controller.uploadFile 호출 = " + multipartFile.isEmpty());
 
@@ -27,7 +27,7 @@ public class AwsS3Controller {
     }
 
     @PostMapping("/board/{id}/images")
-    public ResponseEntity<?> insertBoardImages(@RequestPart(required = false) MultipartFile multipartFile,
+    public ResponseEntity<?> insertBoardImages(@RequestPart(value="file", required = false) MultipartFile multipartFile,
                                                @PathVariable String id){
 
         String imgURL = awsS3Service.uploadImage(multipartFile);
@@ -38,7 +38,7 @@ public class AwsS3Controller {
     }
 
     @PutMapping("/board/{id}/images")
-    public ResponseEntity<?> updateBoardImages(@RequestPart(required = false) MultipartFile multipartFile,
+    public ResponseEntity<?> updateBoardImages(@RequestPart(value="file", required = false) MultipartFile multipartFile,
                                                @PathVariable String id){
 
         String imgURL = awsS3Service.uploadImage(multipartFile);

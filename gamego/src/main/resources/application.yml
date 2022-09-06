@@ -1,4 +1,7 @@
 spring:
+  http:
+    multipart:
+      enable: true
   profiles:
     include: jwt
 #  datasource:

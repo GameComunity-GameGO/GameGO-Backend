@@ -19,8 +19,10 @@ public class AwsS3Controller {
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<Object> uploadFile(/*@RequestPart(value = "file", required = false) */ MultipartFile[] multipartFile) {
+    public ResponseEntity<Object> uploadFile(@RequestPart(value = "file", required = false) MultipartFile[] multipartFile) {
 
+        log.info("AwsS3Controller.uploadFile 호출");
+        
         MultipartFile file = multipartFile[0];
 
         return ResponseEntity.ok(awsS3Service.uploadImage(file));

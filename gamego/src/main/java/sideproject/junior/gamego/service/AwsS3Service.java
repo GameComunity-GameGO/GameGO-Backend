@@ -49,7 +49,7 @@ public class AwsS3Service {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
         }
 
-        return "https://seongho-bucket.s3.ap-northeast-2.amazonaws.com/" + fileName;
+        return "https://seongho-bucket.s3.ap-northeast-2.amazonaws.com/board/" + fileName;
     }
 
     public void deleteImage(String fileName) {

@@ -50,7 +50,7 @@ cloud:
     stack:
       auto: false
     s3:
-      bucket: game-go
+      bucket: seongho-bucket/board
     region:
       static: ap-northeast-2
 

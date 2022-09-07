@@ -1,6 +1,7 @@
 package sideproject.junior.gamego.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +13,26 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/s3")
+@Log4j2
 public class AwsS3Controller {
 
     private final AwsS3Service awsS3Service;
 
     @PostMapping("/images")
-    public ResponseEntity<List<String>> uploadFile(@RequestPart List<MultipartFile> multipartFile) {
-        return ResponseEntity.ok(awsS3Service.uploadImage(multipartFile));
+    public ResponseEntity<Object> uploadFile(@RequestParam("img") MultipartFile[] multipartFile) {
+
+        log.info("AwsS3Controller.uploadFile 호출");
+        
+        MultipartFile file = multipartFile[0];
+
+        return ResponseEntity.ok(awsS3Service.uploadImage(file));
     }
 
     @PostMapping("/board/{id}/images")
-    public ResponseEntity<?> insertBoardImages(@RequestPart List<MultipartFile> multipartFile,
+    public ResponseEntity<?> insertBoardImages(@RequestPart(value="file", required = false) MultipartFile multipartFile,
                                                @PathVariable String id){
 
-        List<String> imgURL = awsS3Service.uploadImage(multipartFile);
+        String imgURL = awsS3Service.uploadImage(multipartFile);
 
         awsS3Service.insertBoardImages(Long.parseLong(id), imgURL);
 
@@ -33,10 +40,10 @@ public class AwsS3Controller {
     }
 
     @PutMapping("/board/{id}/images")
-    public ResponseEntity<?> updateBoardImages(@RequestPart List<MultipartFile> multipartFile,
+    public ResponseEntity<?> updateBoardImages(@RequestPart(value="file", required = false) MultipartFile multipartFile,
                                                @PathVariable String id){
 
-        List<String> imgURL = awsS3Service.uploadImage(multipartFile);
+        String imgURL = awsS3Service.uploadImage(multipartFile);
 
         awsS3Service.updateBoardImages(Long.parseLong(id), imgURL);
 

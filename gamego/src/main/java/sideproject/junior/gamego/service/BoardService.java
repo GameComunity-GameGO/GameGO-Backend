@@ -78,7 +78,7 @@ public class BoardService {
                 .contents(dto.getContents())
                 .member(member)
                 .category(getCategory)
-                .type(boardType)
+                .boardType(boardType)
                 .build();
 
         CommunityBoard board = boardRepository.save(createBoard);

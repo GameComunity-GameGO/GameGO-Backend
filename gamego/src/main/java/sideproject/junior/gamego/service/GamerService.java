@@ -116,7 +116,9 @@ public class GamerService {
         Member member = memberService.MemberStateApi(username);
         if (member.getId()!=null){
             Optional<Gamer> findGamer = gamerRepository.findByMember(member);
-            gamerRepository.delete(findGamer.get());
+            if (findGamer.isPresent()){
+                gamerRepository.delete(findGamer.get());
+            }
         }
     }
 

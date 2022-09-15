@@ -93,8 +93,8 @@ public class BoardController {
 
         Long memberId = securityUtil.getMemberId();
 
-        if(boardService.updateBoard(memberId, dto, Long.parseLong(boardId))!=null){
-            return new ResponseEntity<>(boardService.updateBoard(memberId, dto, Long.parseLong(boardId)), HttpStatus.OK);
+        if(boardService.checkUpdateBoard(memberId, Long.parseLong(boardId)) == 1){
+            return new ResponseEntity<>(boardService.updateBoard(dto, Long.parseLong(boardId)), HttpStatus.OK);
         }else{
             return new ResponseEntity<>("작성된 게시물의 사용자가 아닙니다", HttpStatus.BAD_REQUEST);
         }

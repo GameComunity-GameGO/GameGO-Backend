@@ -100,40 +100,46 @@ public class BoardService {
         return board.toResponseDTO(member);
     }
 
-    public ResponseBoardDTO updateBoard(Long memberId, RequestBoardDTO dto, Long boarId) {
+    public ResponseBoardDTO updateBoard(RequestBoardDTO dto, Long boarId) {
 
         CommunityBoard getBoard = boardRepository.findById(boarId).get();
 
-        if(Objects.equals(getBoard.getMember().getId(), memberId)) {
+        String category = dto.getCategory();
+        String type = dto.getType();
 
-            String category = dto.getCategory();
-            String type = dto.getType();
+        Category getCategory = categoryService.getCategory(category);
 
-            Category getCategory = categoryService.getCategory(category);
-            BoardType boardType = categoryService.getType(type);
+        BoardType boardType = categoryService.getType(type);
 
-            List<Images> getImageList = imagesRepository.findAllByCommunityBoardId(getBoard.getId());
+        List<Images> getImageList = imagesRepository.findAllByCommunityBoardId(getBoard.getId());
 
-            for (Images images : getImageList) {
-                awsS3Service.deleteImage(images.getImgURL());
-            }
-
-            imagesRepository.deleteAllByCommunityBoardId(getBoard.getId());
-
-            for (String s : dto.getImgArray()) {
-                Images images = Images.builder()
-                        .imgURL(s)
-                        .communityBoard(getBoard)
-                        .build();
-                getBoard.insertImage(imagesRepository.save(images));
-            }
-
-            CommunityBoard updateBoard = getBoard.update(dto.getTitle(), dto.getContents(), getCategory, boardType);
-
-            return updateBoard.toDTO();
-        }else{
-            return null;
+        for (Images images : getImageList) {
+            awsS3Service.deleteImage(images.getImgURL());
         }
+
+        imagesRepository.deleteAllByCommunityBoardId(getBoard.getId());
+
+        for (String s : dto.getImgArray()) {
+            Images images = Images.builder()
+                    .imgURL(s)
+                    .communityBoard(getBoard)
+                    .build();
+            getBoard.insertImage(imagesRepository.save(images));
+        }
+
+        CommunityBoard updateBoard = getBoard.update(dto.getTitle(), dto.getContents(), getCategory, boardType);
+
+        return updateBoard.toDTO();
+    }
+
+    public int checkUpdateBoard(Long memberId, Long boardId){
+
+        CommunityBoard getBoard = boardRepository.findById(boardId).get();
+
+        if(Objects.equals(getBoard.getMember().getId(), memberId)){
+            return 1;
+        }else
+            return 0;
     }
 
     public int deleteBoard(Long boardId, Long memberId) {

@@ -26,9 +26,9 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final CategoryService categoryService;
-    private final ImagesRepository imagesRepository;
     private final MemberRepository memberRepository;
     private final ReplyRepository replyRepository;
+    private final AwsS3Service awsS3Service;
 
     public Page<ResponseBoardDTO> getBoardList(Pageable pageable) {
 
@@ -100,6 +100,12 @@ public class BoardService {
             Category getCategory = categoryService.getCategory(category);
             BoardType boardType = categoryService.getType(type);
 
+            if(!dto.getImages().isEmpty()){
+                for (String image : dto.getImages()) {
+                    awsS3Service.deleteImage(image);
+                }
+            }
+
             CommunityBoard updateBoard = getBoard.update(dto.getTitle(), dto.getContents(), getCategory, boardType);
 
             return updateBoard.toDTO();
@@ -108,12 +114,15 @@ public class BoardService {
         }
     }
 
-    public int deleteBoard(Long boardId, Long memberId) {
+    public int deleteBoard(Long boardId, Long memberId, List<String> images) {
 
         if(Objects.equals(boardRepository.findById(boardId).get().getMember().getId(), memberId)) {
 
-
-            imagesRepository.deleteImagesByCommunityBoardId(boardId);
+            if(!images.isEmpty()){
+                for (String image : images) {
+                    awsS3Service.deleteImage(image);
+                }
+            }
 
             boardRepository.deleteById(boardId);
 

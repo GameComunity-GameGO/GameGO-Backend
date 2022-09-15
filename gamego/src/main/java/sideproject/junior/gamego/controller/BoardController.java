@@ -15,6 +15,8 @@ import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.service.BoardService;
 import sideproject.junior.gamego.service.LikesService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -99,7 +101,8 @@ public class BoardController {
     }
 
     @DeleteMapping("/board/{boardId}")
-    public ResponseEntity<?> deleteBoard(@PathVariable String boardId){
+    public ResponseEntity<?> deleteBoard(@PathVariable String boardId,
+                                         @RequestBody List<String> images){
 
         log.info("Delete : /api/board 호출");
 
@@ -109,7 +112,7 @@ public class BoardController {
 
         log.info("memberId = " + memberId);
 
-        int check = boardService.deleteBoard(Long.parseLong(boardId), memberId);
+        int check = boardService.deleteBoard(Long.parseLong(boardId), memberId, images);
 
         if(check == 1) {
             return new ResponseEntity<>(check, HttpStatus.OK);

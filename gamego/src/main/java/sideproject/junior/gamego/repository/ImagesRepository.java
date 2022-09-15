@@ -9,5 +9,5 @@ public interface ImagesRepository extends JpaRepository<Images, Long> {
 
     List<Images> findAllByCommunityBoardId(Long communityBoardId);
 
-    void deleteImagesByCommunityBoardId(Long communityBoardId);
+    void deleteAllByCommunityBoardId(Long communityBoardId);
 }

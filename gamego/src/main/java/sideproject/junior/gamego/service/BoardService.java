@@ -15,8 +15,11 @@ import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.repository.ReplyRepository;
 import sideproject.junior.gamego.repository.board.BoardRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class BoardService {
     private final CategoryService categoryService;
     private final MemberRepository memberRepository;
     private final ReplyRepository replyRepository;
+    private final ImagesRepository imagesRepository;
     private final AwsS3Service awsS3Service;
 
     public Page<ResponseBoardDTO> getBoardList(Pageable pageable) {
@@ -83,6 +87,14 @@ public class BoardService {
 
         CommunityBoard board = boardRepository.save(createBoard);
 
+        for (String s : dto.getImgArray()) {
+            Images images = Images.builder()
+                    .imgURL(s)
+                    .communityBoard(board)
+                    .build();
+            board.insertImage(imagesRepository.save(images));
+        }
+
         log.info("board = " + board.getId() );
 
         return board.toResponseDTO(member);
@@ -100,10 +112,20 @@ public class BoardService {
             Category getCategory = categoryService.getCategory(category);
             BoardType boardType = categoryService.getType(type);
 
-            if(!dto.getImages().isEmpty()){
-                for (String image : dto.getImages()) {
-                    awsS3Service.deleteImage(image);
-                }
+            List<Images> getImageList = imagesRepository.findAllByCommunityBoardId(getBoard.getId());
+
+            for (Images images : getImageList) {
+                awsS3Service.deleteImage(images.getImgURL());
+            }
+
+            imagesRepository.deleteAllByCommunityBoardId(getBoard.getId());
+
+            for (String s : dto.getImgArray()) {
+                Images images = Images.builder()
+                        .imgURL(s)
+                        .communityBoard(getBoard)
+                        .build();
+                getBoard.insertImage(imagesRepository.save(images));
             }
 
             CommunityBoard updateBoard = getBoard.update(dto.getTitle(), dto.getContents(), getCategory, boardType);
@@ -114,14 +136,14 @@ public class BoardService {
         }
     }
 
-    public int deleteBoard(Long boardId, Long memberId, List<String> images) {
+    public int deleteBoard(Long boardId, Long memberId) {
 
         if(Objects.equals(boardRepository.findById(boardId).get().getMember().getId(), memberId)) {
 
-            if(!images.isEmpty()){
-                for (String image : images) {
-                    awsS3Service.deleteImage(image);
-                }
+            List<Images> getImageList = imagesRepository.findAllByCommunityBoardId(boardId);
+
+            for (Images images : getImageList) {
+                awsS3Service.deleteImage(images.getImgURL());
             }
 
             boardRepository.deleteById(boardId);

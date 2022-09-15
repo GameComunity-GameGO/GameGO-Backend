@@ -70,7 +70,7 @@ public class BoardController {
         log.info("=====================================");
         log.info("dto.category = " + dto.getCategory());
         log.info("=====================================");
-        log.info("dto.imgURL = " + dto.getImgUrl());
+        log.info("dto.imgURL.length = " + dto.getImgArray().length);
         log.info("=====================================");
         log.info("dto.type = " + dto.getType());
       
@@ -101,8 +101,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/board/{boardId}")
-    public ResponseEntity<?> deleteBoard(@PathVariable String boardId,
-                                         @RequestBody List<String> images){
+    public ResponseEntity<?> deleteBoard(@PathVariable String boardId){
 
         log.info("Delete : /api/board 호출");
 
@@ -112,7 +111,7 @@ public class BoardController {
 
         log.info("memberId = " + memberId);
 
-        int check = boardService.deleteBoard(Long.parseLong(boardId), memberId, images);
+        int check = boardService.deleteBoard(Long.parseLong(boardId), memberId);
 
         if(check == 1) {
             return new ResponseEntity<>(check, HttpStatus.OK);
@@ -157,15 +156,7 @@ public class BoardController {
 
     @DeleteMapping("/board/{id}/unLike")
     public ResponseEntity<?> boardUnlikeDelete(@PathVariable String id){
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
-        log.info("커밋용 주석");
+
         Long memberId = securityUtil.getMemberId();
 
         int boardUnlikeCount = likesService.boardUnlikeDelete(Long.parseLong(id), memberId);

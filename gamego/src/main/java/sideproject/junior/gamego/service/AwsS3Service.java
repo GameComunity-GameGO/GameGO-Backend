@@ -73,7 +73,6 @@ public class AwsS3Service {
         CommunityBoard board = boardRepository.findById(boardId).get();
 
             Images image = Images.builder()
-                    .communityBoard(board)
                     .imgURL(imgURL)
                     .build();
 
@@ -85,7 +84,7 @@ public class AwsS3Service {
     public void updateBoardImages(Long boardId, String imgURL) {
 
         if(imagesRepository.findAllByCommunityBoardId(boardId) != null){
-            imagesRepository.deleteImagesByCommunityBoardId(boardId);
+            imagesRepository.deleteAllByCommunityBoardId(boardId);
         }
         insertBoardImages(boardId, imgURL);
     }

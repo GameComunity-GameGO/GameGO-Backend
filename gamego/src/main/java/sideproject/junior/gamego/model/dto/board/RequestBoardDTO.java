@@ -13,11 +13,13 @@ public class RequestBoardDTO {
 
     private String contents;
 
+/*
     private String imgUrl;
+*/
 
     private String category;
 
     private String type;
 
-    private List<String> images;
+    private String[] imgArray;
 }

@@ -44,6 +44,4 @@ public class ResponseBoardDTO {
     private LocalDateTime createdDate;
 
     private LocalDateTime lastModifiedDate;
-
-
 }

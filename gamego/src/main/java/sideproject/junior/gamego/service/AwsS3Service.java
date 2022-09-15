@@ -53,7 +53,10 @@ public class AwsS3Service {
     }
 
     public void deleteImage(String fileName) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
+
+        String realFileName = fileName.substring(61);
+
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket, realFileName));
     }
 
     private String createFileName(String fileName) { // 먼저 파일 업로드 시, 파일명을 난수화하기 위해 random으로 돌립니다.

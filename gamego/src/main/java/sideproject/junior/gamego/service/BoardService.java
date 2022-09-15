@@ -108,13 +108,12 @@ public class BoardService {
 
         BoardType boardType = categoryService.getType(type);
 
-        List<Images> getImageList = imagesRepository.findAllByCommunityBoardId(getBoard.getId());
+        List<Images> imagesList = imagesRepository.deleteImagesByBoardId(getBoard.getId());
 
-        for (Images images : getImageList) {
+        for (Images images : imagesList) {
             awsS3Service.deleteImage(images.getImgURL());
+            imagesRepository.delete(images);
         }
-
-        imagesRepository.deleteImagesByBoardId(getBoard.getId());
 
         for (String s : dto.getImgArray()) {
             Images images = Images.builder()

@@ -8,6 +8,4 @@ import java.util.List;
 public interface ImagesRepository extends JpaRepository<Images, Long>, ImageCustomRepository{
 
     List<Images> findAllByCommunityBoardId(Long communityBoardId);
-
-    void deleteAllByCommunityBoardId(Long communityBoardId);
 }

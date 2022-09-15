@@ -68,34 +68,4 @@ public class AwsS3Service {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
     }
-
-    public void insertBoardImages(Long boardId, String imgURL) {
-
-        CommunityBoard board = boardRepository.findById(boardId).get();
-
-            Images image = Images.builder()
-                    .imgURL(imgURL)
-                    .build();
-
-            Images savedImg = imagesRepository.save(image);
-
-            board.insertImage(savedImg);
-        }
-
-    public void updateBoardImages(Long boardId, String imgURL) {
-
-        if(imagesRepository.findAllByCommunityBoardId(boardId) != null){
-            imagesRepository.deleteAllByCommunityBoardId(boardId);
-        }
-        insertBoardImages(boardId, imgURL);
-    }
-
-    public void deleteBoardImage(Long boardId) {
-
-        CommunityBoard board = boardRepository.findById(boardId).get();
-
-        for (Images images : board.getImageList()) {
-            deleteImage(images.getImgURL());
-        }
-    }
 }

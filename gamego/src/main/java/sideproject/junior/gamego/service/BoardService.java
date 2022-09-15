@@ -15,6 +15,7 @@ import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.repository.ReplyRepository;
 import sideproject.junior.gamego.repository.board.BoardRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -110,13 +111,17 @@ public class BoardService {
 
         List<Images> imagesList = imagesRepository.findAllByCommunityBoardId(getBoard.getId());
 
+        getBoard.getImageList().clear();
+
         for (Images images : imagesList) {
             log.info("images.getId() = " + images.getId());
+            log.info("images.getImgURL = " + images.getImgURL());
             awsS3Service.deleteImage(images.getImgURL());
             imagesRepository.delete(images);
         }
 
         for (String s : dto.getImgArray()) {
+            log.info("dto.getImgArray = " + Arrays.toString(dto.getImgArray()));
             Images images = Images.builder()
                     .imgURL(s)
                     .communityBoard(getBoard)

@@ -13,13 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import sideproject.junior.gamego.model.entity.CommunityBoard;
 import sideproject.junior.gamego.model.entity.Images;
-import sideproject.junior.gamego.repository.ImagesRepository;
+import sideproject.junior.gamego.repository.images.ImagesRepository;
 import sideproject.junior.gamego.repository.board.BoardRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service

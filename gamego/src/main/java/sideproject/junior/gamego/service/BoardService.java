@@ -10,16 +10,13 @@ import sideproject.junior.gamego.model.dto.board.RequestBoardDTO;
 import sideproject.junior.gamego.model.dto.board.ResponseBoardDTO;
 import sideproject.junior.gamego.model.dto.reply.ReplyDTO;
 import sideproject.junior.gamego.model.entity.*;
-import sideproject.junior.gamego.repository.ImagesRepository;
+import sideproject.junior.gamego.repository.images.ImagesRepository;
 import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.repository.ReplyRepository;
 import sideproject.junior.gamego.repository.board.BoardRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -117,7 +114,7 @@ public class BoardService {
             awsS3Service.deleteImage(images.getImgURL());
         }
 
-        imagesRepository.deleteAllByCommunityBoardId(getBoard.getId());
+        imagesRepository.deleteImagesByBoardId(getBoard.getId());
 
         for (String s : dto.getImgArray()) {
             Images images = Images.builder()

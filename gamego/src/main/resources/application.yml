@@ -30,7 +30,7 @@ spring:
 
 
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       temp:
         use_jdbc_metadata_defaults: false
     generate-ddl: true

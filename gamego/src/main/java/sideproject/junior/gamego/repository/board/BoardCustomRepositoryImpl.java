@@ -49,7 +49,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository{
 
         List<CommunityBoard> queryResult = queryFactory
                 .selectFrom(communityBoard)
-                .where(communityBoard.likes.size().goe(2))
+                .where(communityBoard.likes.size().goe(1))
                 .leftJoin(communityBoard.member, member)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

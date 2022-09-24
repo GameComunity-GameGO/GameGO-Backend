@@ -46,7 +46,7 @@ public class Member extends BaseEntity{
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<ChatRoomJoinMember> chatRoomJoinMembers;
+    private List<ChatRoom> chatRooms;
 
     @Column(name = "authority")
     @Enumerated(EnumType.STRING)

@@ -1,18 +1,18 @@
 package sideproject.junior.gamego.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import sideproject.junior.gamego.model.dto.chat.ResChatRoomDTO;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name = "chatRoom")
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class ChatRoom {
 
     @Id
@@ -29,12 +29,26 @@ public class ChatRoom {
     @Column(name = "capacity")
     private String capacity;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "chatRoom")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private Member host;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
     private List<HashTag> hashTags;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "chatRoom")
-    private List<ChatRoomJoinMember> chatRoomJoinMembers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
+    private List<Member> chatRoomJoinMembers;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "chatRoom")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
     private List<ChatMessage> chatMessages;
+
+    public ResChatRoomDTO toResDTO() {
+        return ResChatRoomDTO.builder()
+                .roomName(this.roomName)
+                .roomId(this.id)
+                .memberList(this.chatRoomJoinMembers.stream().map(Member::toDTO).collect(Collectors.toList()))
+                .host(this.host.toDTO())
+                .chatMessageList(this.chatMessages.stream().map(ChatMessage::toDTO).collect(Collectors.toList()))
+                .build();
+    }
 }

@@ -1,9 +1,7 @@
 package sideproject.junior.gamego.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import sideproject.junior.gamego.model.dto.chat.ResChatMessageDTO;
 
 import javax.persistence.*;
 
@@ -11,7 +9,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class ChatMessage {
+@Builder
+public class ChatMessage extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +26,18 @@ public class ChatMessage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
+
+    public ResChatMessageDTO toDTO(){
+        return ResChatMessageDTO.builder()
+                .id(this.id)
+                .content(this.content)
+                .member(this.member.toDTO())
+                .createdDate(this.createdDate)
+                .lastModifiedDate(this.lastModifiedDate)
+                .build();
+    }
 }

@@ -31,13 +31,13 @@ public class ChatRoom {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-    private Member host;
+    private Member member;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
     private List<HashTag> hashTags;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
-    private List<Member> chatRoomJoinMembers;
+    private List<ChatRoomJoinMember> chatRoomJoinMembers;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
     private List<ChatMessage> chatMessages;
@@ -46,9 +46,13 @@ public class ChatRoom {
         return ResChatRoomDTO.builder()
                 .roomName(this.roomName)
                 .roomId(this.id)
-                .memberList(this.chatRoomJoinMembers.stream().map(Member::toDTO).collect(Collectors.toList()))
-                .host(this.host.toDTO())
+                .memberList(this.chatRoomJoinMembers.stream().map(ChatRoomJoinMember::toDTO).collect(Collectors.toList()))
+                .host(this.member.toDTO())
                 .chatMessageList(this.chatMessages.stream().map(ChatMessage::toDTO).collect(Collectors.toList()))
                 .build();
+    }
+
+    public void joinMember(ChatRoomJoinMember member) {
+        this.chatRoomJoinMembers.add(member);
     }
 }

@@ -1,9 +1,7 @@
 package sideproject.junior.gamego.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import sideproject.junior.gamego.model.dto.chat.ChatRoomJoinMemberDTO;
 
 import javax.persistence.*;
 
@@ -11,6 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class ChatRoomJoinMember {
 
     @Id
@@ -25,4 +24,12 @@ public class ChatRoomJoinMember {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
+
+    public ChatRoomJoinMemberDTO toDTO(){
+        return ChatRoomJoinMemberDTO.builder()
+                .id(this.id)
+                .member(this.member.toDTO())
+                .chatRoom(this.chatRoom.toResDTO())
+                .build();
+    }
 }

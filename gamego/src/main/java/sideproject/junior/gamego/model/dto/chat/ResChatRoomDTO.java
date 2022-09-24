@@ -14,7 +14,7 @@ public class ResChatRoomDTO {
 
     private Long roomId;
     private String roomName;
-    private List<MemberDTO> memberList;
+    private List<ChatRoomJoinMemberDTO> memberList;
     private MemberDTO host;
     private List<ResChatMessageDTO> chatMessageList;
 }

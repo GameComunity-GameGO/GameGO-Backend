@@ -1,5 +1,6 @@
 package sideproject.junior.gamego.controller;
 
+import com.amazonaws.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,16 @@ public class ChatController {
         }else {
             return new ResponseEntity<>(chatRoom, HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/chat/room/{roomId}/join")
+    public ResponseEntity<?> joinRoom(@PathVariable String roomId){
+
+        Long memberId = securityUtil.getMemberId();
+
+        chatService.joinRoom(memberId, Long.parseLong(roomId));
+
+        return new ResponseEntity<>("채팅방 입장 성공", HttpStatus.OK);
     }
 
     @MessageMapping("/chatting/room/{roomId}")

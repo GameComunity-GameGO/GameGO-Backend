@@ -15,6 +15,10 @@ import sideproject.junior.gamego.repository.ChatMessageRepository;
 import sideproject.junior.gamego.repository.ChatRoomRepository;
 import sideproject.junior.gamego.repository.MemberRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -31,7 +35,6 @@ public class ChatService {
         ChatRoom chatRoom = ChatRoom.builder()
                 .roomName(dto.getRoomName())
                 .capacity(dto.getCapacity())
-                .host(member)
                 .build();
 
         chatRoomRepository.save(chatRoom);
@@ -41,11 +44,15 @@ public class ChatService {
 
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
 
-        if(chatRoom.getHost().getId().equals(memberId) || chatRoom.getChatRoomJoinMembers().stream().anyMatch(member -> member.getId().equals(memberId))){
-            return chatRoom.toResDTO();
-        }else{
-            return null;
+        List<ChatRoomJoinMember> members = new ArrayList<>(chatRoom.getChatRoomJoinMembers());
+
+        for (ChatRoomJoinMember member : members) {
+            if(member.getMember().getId().equals(memberId)){
+                return chatRoom.toResDTO();
+            }
         }
+
+        return null;
     }
 
     public ResChatMessageDTO createChat(Long roomId, Long memberId, ReqChatMessageDTO dto) {

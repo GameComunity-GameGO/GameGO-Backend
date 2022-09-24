@@ -29,10 +29,6 @@ public class ChatRoom {
     @Column(name = "capacity")
     private String capacity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
-    private Member member;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
     private List<HashTag> hashTags;
 
@@ -47,7 +43,6 @@ public class ChatRoom {
                 .roomName(this.roomName)
                 .roomId(this.id)
                 .memberList(this.chatRoomJoinMembers.stream().map(ChatRoomJoinMember::toDTO).collect(Collectors.toList()))
-                .host(this.member.toDTO())
                 .chatMessageList(this.chatMessages.stream().map(ChatMessage::toDTO).collect(Collectors.toList()))
                 .build();
     }

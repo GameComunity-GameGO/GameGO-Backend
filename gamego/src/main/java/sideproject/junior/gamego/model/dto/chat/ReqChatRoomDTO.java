@@ -13,5 +13,5 @@ public class ReqChatRoomDTO {
 
     private String roomName;
     private String capacity;
-    private List<String> HashTag;
+    /*private List<String> HashTag;*/
 }

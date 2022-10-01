@@ -1,8 +1,10 @@
 package sideproject.junior.gamego.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.chat.ResChatMessageDTO;
 import sideproject.junior.gamego.model.dto.chat.ReqChatMessageDTO;
 import sideproject.junior.gamego.model.dto.chat.ReqChatRoomDTO;
@@ -17,11 +19,11 @@ import sideproject.junior.gamego.repository.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Log4j2
 public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
@@ -76,7 +78,11 @@ public class ChatService {
 
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
 
+        log.info("ChatService.joinRoom-chatRoom.id = " + chatRoom.getId());
+
         Member member = memberRepository.findById(memberId).get();
+
+        log.info("ChatService.joinRoom-member.id = " + member.getId());
 
         ChatRoomJoinMember joinMember = ChatRoomJoinMember.builder()
                 .chatRoom(chatRoom)
@@ -84,5 +90,25 @@ public class ChatService {
                 .build();
 
         chatRoom.joinMember(joinMember);
+    }
+
+    public List<ResChatRoomDTO> getChatRoomList(Long memberId) {
+
+        Member member = memberRepository.findById(memberId).get();
+
+        List<ResChatRoomDTO> getRoomList = new ArrayList<>();
+
+        for (ChatRoomJoinMember chatRoomJoinMember : member.getChatRoomJoinMembers()) {
+            getRoomList.add(chatRoomJoinMember.getChatRoom().toResDTO());
+        }
+
+        return getRoomList;
+    }
+
+    public MemberDTO chatRoomEnter(Long memberId) {
+
+        Member member = memberRepository.findById(memberId).get();
+
+        return member.toDTO();
     }
 }

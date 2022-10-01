@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.chat.ReqChatMessageDTO;
 import sideproject.junior.gamego.model.dto.chat.ReqChatRoomDTO;
 import sideproject.junior.gamego.model.dto.chat.ResChatMessageDTO;
@@ -16,6 +17,8 @@ import sideproject.junior.gamego.model.dto.chat.ResChatRoomDTO;
 import sideproject.junior.gamego.model.entity.ChatMessage;
 import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.service.ChatService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,10 +54,20 @@ public class ChatController {
         }
     }
 
+    @GetMapping("/chat/room/list")
+    public ResponseEntity<?> getChatRoomList(){
+
+        Long memberId = securityUtil.getMemberId();
+
+        return new ResponseEntity<>(chatService.getChatRoomList(memberId), HttpStatus.OK);
+    }
+
     @PostMapping("/chat/room/{roomId}/join")
     public ResponseEntity<?> joinRoom(@PathVariable String roomId){
 
         Long memberId = securityUtil.getMemberId();
+
+        log.info("ChatController.joinRoom 호출");
 
         chatService.joinRoom(memberId, Long.parseLong(roomId));
 
@@ -71,5 +84,27 @@ public class ChatController {
         ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), memberId, dto);
 
         template.convertAndSend("/topic/chat/room/" + roomId, chatMessage);
+    }
+
+    @MessageMapping("/chatting/room/{roomId}/enter")
+    public void chatRoomEnter(@DestinationVariable String roomId){
+
+        Long memberId = securityUtil.getMemberId();
+
+        log.info("ChatController.chatRoomEnter 호출");
+
+        MemberDTO memberDTO = chatService.chatRoomEnter(memberId);
+
+        template.convertAndSend("/topic/chat/room/" + roomId, memberDTO);
+    }
+
+    @MessageMapping("/chat/room/checkPoint")
+    public void chatRoomCheckPoint(){
+
+    }
+
+    @MessageMapping("/alarm/chat/room/{roomId}")
+    public void chatAlarm(@DestinationVariable String roomId){
+
     }
 }

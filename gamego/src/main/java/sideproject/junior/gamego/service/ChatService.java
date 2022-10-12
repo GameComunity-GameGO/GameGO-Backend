@@ -13,8 +13,9 @@ import sideproject.junior.gamego.model.entity.ChatMessage;
 import sideproject.junior.gamego.model.entity.ChatRoom;
 import sideproject.junior.gamego.model.entity.ChatRoomJoinMember;
 import sideproject.junior.gamego.model.entity.Member;
-import sideproject.junior.gamego.repository.ChatMessageRepository;
-import sideproject.junior.gamego.repository.ChatRoomRepository;
+import sideproject.junior.gamego.repository.chat.ChatMessageRepository;
+import sideproject.junior.gamego.repository.chat.ChatRoomJoinMemberRepository;
+import sideproject.junior.gamego.repository.chat.ChatRoomRepository;
 import sideproject.junior.gamego.repository.MemberRepository;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomJoinMemberRepository joinMemberRepository;
     private final MemberRepository memberRepository;
 
     public void createChatRoom(Long memberId, ReqChatRoomDTO dto) {
@@ -71,6 +73,10 @@ public class ChatService {
 
         ChatMessage savedChat = chatMessageRepository.save(chat);
 
+        ChatRoomJoinMember chatRoomJoinMember = joinMemberRepository.findChatRoomJoinMemberByChatRoomIdAndMemberId(chatRoom.getId(), memberId);
+
+        chatRoomJoinMember.updateCheckPoint(chat.getId());
+
         return savedChat.toDTO();
     }
 
@@ -89,7 +95,9 @@ public class ChatService {
                 .member(member)
                 .build();
 
-        chatRoom.joinMember(joinMember);
+        ChatRoomJoinMember savedJoinMember = joinMemberRepository.save(joinMember);
+
+        chatRoom.joinMember(savedJoinMember);
     }
 
     public List<ResChatRoomDTO> getChatRoomList(Long memberId) {
@@ -110,5 +118,16 @@ public class ChatService {
         Member member = memberRepository.findById(memberId).get();
 
         return member.toDTO();
+    }
+
+    public void updateCheckPoint(Long memberId, Long roomId, Long messageId) {
+
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+
+        ChatRoomJoinMember chatRoomJoinMember = joinMemberRepository.findChatRoomJoinMemberByChatRoomIdAndMemberId(chatRoom.getId(), memberId);
+
+        chatRoomJoinMember.updateCheckPoint(messageId);
+
+        log.info("updateCheckPoint!");
     }
 }

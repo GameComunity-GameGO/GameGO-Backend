@@ -1,4 +1,4 @@
-package sideproject.junior.gamego.repository;
+package sideproject.junior.gamego.repository.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import sideproject.junior.gamego.model.entity.BoardType;

@@ -10,15 +10,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import sideproject.junior.gamego.model.dto.MemberDTO;
-import sideproject.junior.gamego.model.dto.chat.ReqChatMessageDTO;
-import sideproject.junior.gamego.model.dto.chat.ReqChatRoomDTO;
-import sideproject.junior.gamego.model.dto.chat.ResChatMessageDTO;
-import sideproject.junior.gamego.model.dto.chat.ResChatRoomDTO;
-import sideproject.junior.gamego.model.entity.ChatMessage;
+import sideproject.junior.gamego.model.dto.chat.*;
 import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.service.ChatService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,6 +29,8 @@ public class ChatController {
 
         Long memberId = securityUtil.getMemberId();
 
+        log.info("chatController.createChatRoom 호출");
+
         chatService.createChatRoom(memberId, dto);
 
         return new ResponseEntity<>("chatRoom 생성!", HttpStatus.OK);
@@ -44,6 +40,8 @@ public class ChatController {
     public ResponseEntity<?> getRoom(@PathVariable String roomId){
 
         Long memberId = securityUtil.getMemberId();
+
+        log.info("chatController.getRoom 호출");
 
         ResChatRoomDTO chatRoom = chatService.getChatRoom(Long.parseLong(roomId), memberId);
 
@@ -59,10 +57,12 @@ public class ChatController {
 
         Long memberId = securityUtil.getMemberId();
 
+        log.info("chatController.getChatRoomList 호출");
+
         return new ResponseEntity<>(chatService.getChatRoomList(memberId), HttpStatus.OK);
     }
 
-    @PostMapping("/chat/room/{roomId}/join")
+    @PostMapping("/chat/room/{roomId}/join") // 채팅방 처음 입장
     public ResponseEntity<?> joinRoom(@PathVariable String roomId){
 
         Long memberId = securityUtil.getMemberId();
@@ -71,7 +71,7 @@ public class ChatController {
 
         chatService.joinRoom(memberId, Long.parseLong(roomId));
 
-        return new ResponseEntity<>("채팅방 입장 성공", HttpStatus.OK);
+        return new ResponseEntity<>("채팅방 처음 입장 성공", HttpStatus.OK);
     }
 
     @MessageMapping("/chatting/room/{roomId}")
@@ -83,10 +83,10 @@ public class ChatController {
 
         ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), memberId, dto);
 
-        template.convertAndSend("/topic/chat/room/" + roomId, chatMessage);
+        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
     }
 
-    @MessageMapping("/chatting/room/{roomId}/enter")
+    @MessageMapping("/chat/room/{roomId}/enter")
     public void chatRoomEnter(@DestinationVariable String roomId){
 
         Long memberId = securityUtil.getMemberId();
@@ -95,16 +95,16 @@ public class ChatController {
 
         MemberDTO memberDTO = chatService.chatRoomEnter(memberId);
 
-        template.convertAndSend("/topic/chat/room/" + roomId, memberDTO);
+        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));
     }
 
-    @MessageMapping("/chat/room/checkPoint")
-    public void chatRoomCheckPoint(){
+    @PostMapping("/chat/room/{roomId}/msg/{msgId}/checkPoint")
+    public void chatRoomCheckPoint(@PathVariable String roomId, @PathVariable String msgId){
 
-    }
+        Long memberId = securityUtil.getMemberId();
 
-    @MessageMapping("/alarm/chat/room/{roomId}")
-    public void chatAlarm(@DestinationVariable String roomId){
+        log.info("ChatController.checkPoint 호출");
 
+        chatService.updateCheckPoint(memberId, Long.parseLong(roomId), Long.parseLong(msgId));
     }
 }

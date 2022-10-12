@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sideproject.junior.gamego.model.entity.BoardType;
 import sideproject.junior.gamego.model.entity.Category;
-import sideproject.junior.gamego.repository.BoardTypeRepository;
+import sideproject.junior.gamego.repository.board.BoardTypeRepository;
 import sideproject.junior.gamego.repository.category.CategoryRepository;
 
 @Service

@@ -13,4 +13,5 @@ public class ChatRoomJoinMemberDTO {
     private Long id;
     private MemberDTO member;
     private ResChatRoomDTO chatRoom;
+    private Long checkPoint;
 }

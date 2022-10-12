@@ -25,11 +25,18 @@ public class ChatRoomJoinMember {
     @JoinColumn(name = "memberId")
     private Member member;
 
+    private Long checkPoint;
+
     public ChatRoomJoinMemberDTO toDTO(){
         return ChatRoomJoinMemberDTO.builder()
                 .id(this.id)
                 .member(this.member.toDTO())
                 .chatRoom(this.chatRoom.toResDTO())
+                .checkPoint(this.checkPoint)
                 .build();
+    }
+
+    public void updateCheckPoint(Long checkPoint){
+        this.checkPoint = checkPoint;
     }
 }

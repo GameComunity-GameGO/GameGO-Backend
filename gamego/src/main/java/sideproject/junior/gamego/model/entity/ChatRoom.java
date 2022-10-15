@@ -29,13 +29,13 @@ public class ChatRoom {
     @Column(name = "capacity")
     private String capacity;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
+    @OneToMany(mappedBy = "chatRoom")
     private List<HashTag> hashTags;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
+    @OneToMany(mappedBy = "chatRoom")
     private List<ChatRoomJoinMember> chatRoomJoinMembers;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom")
+    @OneToMany(mappedBy = "chatRoom")
     private List<ChatMessage> chatMessages;
 
     public ResChatRoomDTO toResDTO() {

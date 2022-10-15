@@ -1,5 +1,6 @@
 package sideproject.junior.gamego.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import sideproject.junior.gamego.model.dto.chat.ResChatRoomDTO;
 
@@ -29,12 +30,15 @@ public class ChatRoom {
     @Column(name = "capacity")
     private String capacity;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chatRoom")
     private List<HashTag> hashTags;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatRoomJoinMember> chatRoomJoinMembers;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatMessage> chatMessages;
 

@@ -39,4 +39,8 @@ public class ChatRoomJoinMember {
     public void updateCheckPoint(Long checkPoint){
         this.checkPoint = checkPoint;
     }
+
+    public void setChatRoom(ChatRoom chatRoom){
+        this.chatRoom = chatRoom;
+    }
 }

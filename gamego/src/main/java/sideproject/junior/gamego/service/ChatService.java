@@ -41,18 +41,12 @@ public class ChatService {
                 .capacity(dto.getCapacity())
                 .build();
 
-        ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
-
         ChatRoomJoinMember joinMember = ChatRoomJoinMember.builder()
                 .member(member)
                 .chatRoom(chatRoom)
                 .build();
 
-        ChatRoomJoinMember savedJoinMember = joinMemberRepository.save(joinMember);
-
-        member.addChatRoomJoinMember(savedJoinMember);
-
-        savedChatRoom.joinMember(savedJoinMember);
+        joinMemberRepository.save(joinMember);
     }
 
     public ResChatRoomDTO getChatRoom(Long roomId, Long memberId) {

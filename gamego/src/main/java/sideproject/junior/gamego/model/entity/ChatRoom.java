@@ -51,6 +51,13 @@ public class ChatRoom {
                 .build();
     }
 
+    public ResChatRoomDTO toDTO(){
+        return ResChatRoomDTO.builder()
+                .roomId(this.id)
+                .roomName(this.roomName)
+                .build();
+    }
+
     public void joinMember(ChatRoomJoinMember member) {
         this.chatRoomJoinMembers.add(member);
     }

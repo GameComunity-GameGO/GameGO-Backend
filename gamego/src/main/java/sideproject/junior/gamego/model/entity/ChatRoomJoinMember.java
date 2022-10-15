@@ -31,7 +31,7 @@ public class ChatRoomJoinMember {
         return ChatRoomJoinMemberDTO.builder()
                 .id(this.id)
                 .member(this.member.toDTO())
-                .chatRoom(this.chatRoom.toResDTO())
+                .chatRoom(this.chatRoom.toDTO())
                 .checkPoint(this.checkPoint)
                 .build();
     }

@@ -99,4 +99,8 @@ public class Member extends BaseEntity{
                 .nickname(this.nickname)
                 .build();
     }
+
+    public void addChatRoomJoinMember(ChatRoomJoinMember joinMember){
+        this.chatRoomJoinMembers.add(joinMember);
+    }
 }

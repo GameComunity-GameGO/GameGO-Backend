@@ -87,9 +87,11 @@ public class ChatController {
     }
 
     @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId){
+    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto){
 
         Long memberId = securityUtil.getMemberId();
+
+        log.info("Enter_message = " , dto.getContent());
 
         log.info("ChatController.chatRoomEnter 호출");
 

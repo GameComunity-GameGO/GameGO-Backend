@@ -17,7 +17,6 @@ import sideproject.junior.gamego.service.NoticeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 @Log4j2
 public class NoticeController {
@@ -36,7 +35,7 @@ public class NoticeController {
         return new ResponseEntity<>(chatAlarmList, HttpStatus.OK);
     }
 
-    @MessageMapping("/notice/chat/room/{roomId}")
+    @MessageMapping("/notice/chat/room/{roomId}")  // /app/notice/chat/room/{roomId}
     public void chatNotice(@DestinationVariable String roomId){
         template.convertAndSend("/topic/chat/room/" + roomId, "메세지 알림 추가");
     }

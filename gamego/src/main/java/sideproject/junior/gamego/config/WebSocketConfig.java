@@ -20,14 +20,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/alarm", "/ws/chat")
                 /*.setAllowedOrigins("http://localhost:3000")*/
-                .setAllowedOriginPatterns("http://localhost:3000")
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
-        registry.setApplicationDestinationPrefixes("/");
+        registry.enableSimpleBroker("/ws/topic");
+        registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override

@@ -12,6 +12,8 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
+import sideproject.junior.gamego.principal.SecurityUtil;
+import sideproject.junior.gamego.service.jwt.JwtServiceImpl;
 
 import java.util.Date;
 import java.util.Objects;
@@ -24,7 +26,49 @@ public class StompHandler implements ChannelInterceptor {
     @Value("spring.jwt.secret")
     private String secretKey;
 
+    private final JwtServiceImpl jwtService;
+    /*private final SecurityUtil securityUtil;*/
+
     @Override
+    public Message<?> preSend(Message<?> message, MessageChannel channel) {
+
+        log.info("StompHandler.presend 호출");
+
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        // 헤더 토큰 얻기
+        String jwt = String.valueOf(accessor.getNativeHeader("Authorization"));
+        StompCommand command = accessor.getCommand();
+
+        if(command.equals(StompCommand.CONNECT)){
+            jwtService.isTokenValid(jwt);
+        }
+
+        return message;
+    }
+
+    @Override
+    public void postSend(Message message, MessageChannel channel, boolean sent) {
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        String sessionId = accessor.getSessionId();
+        switch (accessor.getCommand()) {
+            case CONNECT:
+                log.info("CONNECT");
+                // 유저가 Websocket으로 connect()를 한 뒤 호출됨
+
+                break;
+            case DISCONNECT:
+                log.info("DISCONNECT");
+                log.info("sessionId: {}",sessionId);
+                log.info("channel:{}",channel);
+                // 유저가 Websocket으로 disconnect() 를 한 뒤 호출됨 or 세션이 끊어졌을 때 발생함(페이지 이동~ 브라우저 닫기 등)
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    /*@Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
         System.out.println("message:" + message);
@@ -43,5 +87,40 @@ public class StompHandler implements ChannelInterceptor {
         } catch (Exception e) {
             return false;
         }
+    }*/
+
+    /*public Message<?> verifySend(String token*//*, Long roomId*//*, Message message){
+
+        //토큰 검증
+        *//*User user = *//* verifyJwt(token);
+
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
+        headerAccessor.setHeader("userId", user.getId());
+
+        //참가한 경우 성공 응답
+        return MessageBuilder.createMessage(message.getPayload(), headerAccessor.getMessageHeaders());
     }
+
+    public void verifyJwt(String accessToken){
+        if(accessToken == null || accessToken.equals("null")){
+            throw new MalformedJwtException("JWT");
+        }
+        //Bearer 문자 자르기
+        String token = accessToken.substring(BEARER_PREFIX.length());
+
+        // 토큰 인증
+        Claims claims;
+        try{
+            claims = jwtService.verifyToken(token, jwtProperties.getAccessTokenSigningKey());
+        }catch (JwtExpiredTokenException e){ // 만료 예외
+            throw new MessageDeliveryException("JWT");
+        }catch (MalformedJwtException e){ //변조 예외
+            throw new MalformedJwtException("JWT");
+        }catch (JwtModulatedTokenException e){ //변조 예외
+            throw new JwtModulatedTokenException("JWT");
+        }
+
+        *//*return jwtUserConvertor.apply(claims);*//*
+
+    }*/
 }

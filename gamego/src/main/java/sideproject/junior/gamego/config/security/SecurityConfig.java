@@ -51,11 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin().disable()// formLogin 인증방법 비활성화
                 .httpBasic().disable()// httpBasic 인증방법 비활성화(특정 리소스에 접근할 때 username과 password 물어봄)
+                .cors().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .authorizeRequests()
+                .antMatchers("/ws/**/**").permitAll()
+                /*.antMatchers("/ws/chat", "/ws/alarm").authenticated() */ // 위의 코드 안되면 바꿔보기
                 .antMatchers("/api/v1/SignUp/**","/api/v1/member","/api/v1/login","/api/v1/accessToken","/v3/api-docs","/swagger/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated();

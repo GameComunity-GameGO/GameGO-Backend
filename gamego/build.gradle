@@ -55,7 +55,10 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-api:2.17.1'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.2'
-    implementation 'org.springframework.security:spring-security-messaging:4.0.1.RELEASE'
+    
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-messaging
+    implementation 'org.springframework.security:spring-security-messaging:5.7.5'
+
 
     ////////////////////////////WEBSOCKET//////////////////////////////////
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -68,7 +71,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.7.5'
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
 
     // aws secrets
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.0'

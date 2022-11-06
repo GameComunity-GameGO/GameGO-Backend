@@ -39,6 +39,8 @@ public class StompHandler implements ChannelInterceptor {
         String jwt = String.valueOf(accessor.getNativeHeader("Authorization"));
         StompCommand command = accessor.getCommand();
 
+        jwt = jwt.substring(8, jwt.length()-1);
+
         log.info("JWT 토큰 : " + jwt);
 
         if(command.equals(StompCommand.CONNECT)){

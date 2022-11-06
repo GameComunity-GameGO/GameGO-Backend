@@ -22,7 +22,6 @@ public class ChatController {
 
     private final SecurityUtil securityUtil;
     private final ChatService chatService;
-    private final SimpMessagingTemplate template;
 
     @PostMapping("/chat/room")
     public ResponseEntity<?> createChatRoom(@RequestBody ReqChatRoomDTO dto){
@@ -72,32 +71,6 @@ public class ChatController {
         chatService.joinRoom(memberId, Long.parseLong(roomId));
 
         return new ResponseEntity<>("채팅방 처음 입장 성공", HttpStatus.OK);
-    }
-
-    @MessageMapping("/chatting/room/{roomId}")
-    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto){
-
-        Long memberId = securityUtil.getMemberId();
-
-        log.info("채팅 api 호출");
-
-        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), memberId, dto);
-
-        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
-    }
-
-    @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto){
-
-        Long memberId = securityUtil.getMemberId();
-
-        log.info("Enter_message = " , dto.getContent());
-
-        log.info("ChatController.chatRoomEnter 호출");
-
-        MemberDTO memberDTO = chatService.chatRoomEnter(memberId);
-
-        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));
     }
 
     @PostMapping("/chat/room/{roomId}/msg/{msgId}/checkPoint")

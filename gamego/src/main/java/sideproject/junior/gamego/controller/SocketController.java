@@ -8,10 +8,14 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sideproject.junior.gamego.model.dto.MemberDTO;
+import sideproject.junior.gamego.model.dto.chat.MessageDTO;
+import sideproject.junior.gamego.model.dto.chat.ReqChatMessageDTO;
+import sideproject.junior.gamego.model.dto.chat.ResChatMessageDTO;
 import sideproject.junior.gamego.model.dto.chat.ResChatRoomDTO;
 import sideproject.junior.gamego.principal.SecurityUtil;
+import sideproject.junior.gamego.service.ChatService;
 import sideproject.junior.gamego.service.NoticeService;
 
 import java.util.List;
@@ -19,10 +23,11 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-public class NoticeController {
+public class SocketController {
 
     private final SecurityUtil securityUtil;
     private final NoticeService noticeService;
+    private final ChatService chatService;
     private final SimpMessagingTemplate template;
 
     @GetMapping("/notice/chat/room/list")
@@ -38,5 +43,31 @@ public class NoticeController {
     @MessageMapping("/notice/chat/room/{roomId}")  // /app/notice/chat/room/{roomId}
     public void chatNotice(@DestinationVariable String roomId){
         template.convertAndSend("/topic/chat/room/" + roomId, "메세지 알림 추가");
+    }
+
+    @MessageMapping("/chatting/room/{roomId}")
+    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto){
+
+        Long memberId = securityUtil.getMemberId();
+
+        log.info("채팅 api 호출");
+
+        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), memberId, dto);
+
+        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
+    }
+
+    @MessageMapping("/chat/room/{roomId}/enter")
+    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto){
+
+        Long memberId = securityUtil.getMemberId();
+
+        log.info("Enter_message = " , dto.getContent());
+
+        log.info("ChatController.chatRoomEnter 호출");
+
+        MemberDTO memberDTO = chatService.chatRoomEnter(memberId);
+
+        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));
     }
 }

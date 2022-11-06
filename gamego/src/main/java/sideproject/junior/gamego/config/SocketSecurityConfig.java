@@ -18,7 +18,7 @@
          log.info("SocketSecurityConfig.configureInbound 호출");
 
          messages
-                 .simpDestMatchers("/ws/**/**").permitAll();
+                 .simpDestMatchers("/ws/**/**", "/app/**/**").permitAll();
      }
 
      @Override

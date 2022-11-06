@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/ws/**/**").permitAll()
+                .antMatchers("/ws/**/**", "/app/**/**").permitAll()
                 /*.antMatchers("/ws/chat", "/ws/alarm").authenticated() */ // 위의 코드 안되면 바꿔보기
                 .antMatchers("/api/v1/SignUp/**","/api/v1/member","/api/v1/login","/api/v1/accessToken","/v3/api-docs","/swagger/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()

@@ -45,8 +45,8 @@ public class StompHandler implements ChannelInterceptor {
 
         if(command.equals(StompCommand.CONNECT)){
             jwtService.isTokenValid(jwt);
+            accessor.addNativeHeader("token", jwt);
         }
-
         return message;
     }
 

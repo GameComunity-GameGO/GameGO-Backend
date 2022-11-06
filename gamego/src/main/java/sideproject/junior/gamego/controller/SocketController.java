@@ -48,26 +48,26 @@ public class SocketController {
     @MessageMapping("/chatting/room/{roomId}")
     public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto){
 
-        Long memberId = securityUtil.getMemberId();
-
         log.info("채팅 api 호출");
+
+        /*Long memberId = securityUtil.getMemberId();
 
         ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), memberId, dto);
 
-        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
+        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));*/
     }
 
     @MessageMapping("/chat/room/{roomId}/enter")
     public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto){
 
-        Long memberId = securityUtil.getMemberId();
-
         log.info("Enter_message = " , dto.getContent());
 
         log.info("ChatController.chatRoomEnter 호출");
 
+        /*Long memberId = securityUtil.getMemberId();
+
         MemberDTO memberDTO = chatService.chatRoomEnter(memberId);
 
-        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));
+        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));*/
     }
 }

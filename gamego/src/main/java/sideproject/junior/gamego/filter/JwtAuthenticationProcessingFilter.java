@@ -45,7 +45,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (request.getRequestURI().equals(NO_CHECK_URL)){
             filterChain.doFilter(request,response);
             return;
-        }else if(request.getRequestURI().equals("/ws/chat") || request.getRequestURI().equals("/ws/alarm")){
+        }else if(request.getRequestURI().startsWith("/ws/chat") || request.getRequestURI().startsWith("/ws/alarm")){
             log.info("/ws/chat || /ws/alarm 무시 되나");
             filterChain.doFilter(request,response);
             return;

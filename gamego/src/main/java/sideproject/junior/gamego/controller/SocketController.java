@@ -86,7 +86,7 @@ public class SocketController {
         
         log.info("채팅 api 호출");
         
-        String jwt = token.substring(8, token.length()-1);
+        String jwt = token.substring(7, token.length());
         
         log.info("jwt = " + jwt);
         
@@ -116,7 +116,7 @@ public class SocketController {
 
         log.info("ChatController.chatRoomEnter 호출");
         
-        String jwt = token.substring(8, token.length()-1);
+        String jwt = token.substring(7, token.length());
         
         log.info("jwt = " + jwt);
 

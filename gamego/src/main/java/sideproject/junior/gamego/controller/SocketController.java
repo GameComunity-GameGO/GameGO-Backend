@@ -42,27 +42,27 @@ public class SocketController {
 
     private static final Map<String, String> SESSIONS = new HashMap<>();
 
-    @EventListener(SessionConnectEvent.class)
-    public void onConnect(SessionConnectEvent event){
+//     @EventListener(SessionConnectEvent.class)
+//     public void onConnect(SessionConnectEvent event){
         
-        log.info("EventListener.onConnect 호출");
+//         log.info("EventListener.onConnect 호출");
         
-        String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
-        log.info("===========================================");
-        log.info("onConnect.sessionID = " + sessionId);
-        log.info("===========================================");
-        String username = event.getMessage().getHeaders().get("nativeHeaders").toString()/*.split("Username=\\[")[1].split("]")[0]*/;
-        log.info("===========================================");
-        log.info("onConnect.username = " + username);
-        log.info("===========================================");
+//         String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
+//         log.info("===========================================");
+//         log.info("onConnect.sessionID = " + sessionId);
+//         log.info("===========================================");
+//         String username = event.getMessage().getHeaders().get("nativeHeaders").toString()/*.split("Username=\\[")[1].split("]")[0]*/;
+//         log.info("===========================================");
+//         log.info("onConnect.username = " + username);
+//         log.info("===========================================");
 
-        SESSIONS.put(sessionId, username);
-    }
+//         SESSIONS.put(sessionId, username);
+//     }
 
-    @EventListener(SessionDisconnectEvent.class)
-    public void onDisconnect(SessionDisconnectEvent event){
-        SESSIONS.remove(event.getSessionId());
-    }
+//     @EventListener(SessionDisconnectEvent.class)
+//     public void onDisconnect(SessionDisconnectEvent event){
+//         SESSIONS.remove(event.getSessionId());
+//     }
 
     @GetMapping("/notice/chat/room/list")
     public ResponseEntity<?> getChatAlarmList(){
@@ -86,11 +86,13 @@ public class SocketController {
         
         log.info("채팅 api 호출");
         
-        log.info("token = " + token);
+        String jwt = token.substring(8, token.length()-1);
+        
+        log.info("jwt = " + jwt);
         
         log.info("===========================================");        
         
-        String username = jwtService.extractUsername(token).get();
+        String username = jwtService.extractUsername(jwt).get();
         
         log.info("username = " + username);
 
@@ -114,11 +116,13 @@ public class SocketController {
 
         log.info("ChatController.chatRoomEnter 호출");
         
-        log.info("token = " + token);
+        String jwt = token.substring(8, token.length()-1);
+        
+        log.info("jwt = " + jwt);
 
         log.info("===========================================");     
         
-        String username = jwtService.extractUsername(token).get();
+        String username = jwtService.extractUsername(jwt).get();
         
         log.info("username = " + username);
 

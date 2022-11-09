@@ -24,6 +24,7 @@ import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.service.ChatService;
 import sideproject.junior.gamego.service.NoticeService;
 import org.springframework.messaging.handler.annotation.Header;
+import sideproject.junior.gamego.service.jwt.JwtServiceImpl;
 
 import java.util.*;
 

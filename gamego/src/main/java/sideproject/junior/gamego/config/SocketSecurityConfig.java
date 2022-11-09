@@ -4,6 +4,7 @@
  import org.springframework.context.annotation.Configuration;
  import org.springframework.core.Ordered;
  import org.springframework.core.annotation.Order;
+ import org.springframework.messaging.simp.SimpMessageType;
  import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
  import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 

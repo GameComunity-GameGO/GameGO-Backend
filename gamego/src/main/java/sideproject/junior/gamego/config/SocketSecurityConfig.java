@@ -19,6 +19,11 @@
 
          messages
                  .simpDestMatchers("/ws/**/**", "/app/**/**").permitAll();
+      
+         messages
+          .simpTypeMatchers(SimpMessageType.CONNECT,
+                        SimpMessageType.DISCONNECT, SimpMessageType.OTHER).permitAll()
+                .anyMessage().authenticated();
      }
 
      @Override

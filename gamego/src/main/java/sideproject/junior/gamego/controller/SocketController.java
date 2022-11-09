@@ -41,11 +41,15 @@ public class SocketController {
 
     @EventListener(SessionConnectEvent.class)
     public void onConnect(SessionConnectEvent event){
+        
+        log.info("EventListener.onConnect 호출");
+        
         String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
-        String username = event.getMessage().getHeaders().get("nativeHeaders").toString().split("User=\\[")[1].split("]")[0];
-
         log.info("===========================================");
         log.info("onConnect.sessionID = " + sessionId);
+        log.info("===========================================");
+        String username = event.getMessage().getHeaders().get("nativeHeaders").toString()/*.split("User=\\[")[1].split("]")[0]*/;
+        log.info("===========================================");
         log.info("onConnect.username = " + username);
         log.info("===========================================");
 

@@ -80,7 +80,7 @@ public class SocketController {
     }
 
     @MessageMapping("/chatting/room/{roomId}")
-    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("token") String token, SimpMessageHeaderAccessor accessor){
+    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("Authorization") String token, SimpMessageHeaderAccessor accessor){
         
         log.info("===========================================");
         
@@ -106,7 +106,7 @@ public class SocketController {
     }
 
     @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("token") String token, SimpMessageHeaderAccessor accessor){
+    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("Authorization") String token, SimpMessageHeaderAccessor accessor){
 
         log.info("===========================================");
         

@@ -41,9 +41,11 @@ public class StompHandler implements ChannelInterceptor {
         log.info("JWT 토큰 : " + jwt);
 
         if(command.equals(StompCommand.CONNECT)){
+            log.info("================CONNECT================");
             jwtService.isTokenValid(jwt);
             String username = jwtService.extractUsername(jwt).get();
-            accessor.addNativeHeader("User", username);
+            log.info("connect.username = " + username);
+            accessor.addNativeHeader("Username", username);
         }
         return message;
     }

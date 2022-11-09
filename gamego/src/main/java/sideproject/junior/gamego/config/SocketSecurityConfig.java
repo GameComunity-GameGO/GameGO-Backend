@@ -19,7 +19,7 @@
          log.info("SocketSecurityConfig.configureInbound 호출");
 
          messages
-                 .simpDestMatchers("/ws/**/**", "/app/**/**").permitAll();
+                 .simpDestMatchers("/ws/**/**").permitAll(); // , "/app/**/**"
       
          messages
           .simpTypeMatchers(SimpMessageType.CONNECT,

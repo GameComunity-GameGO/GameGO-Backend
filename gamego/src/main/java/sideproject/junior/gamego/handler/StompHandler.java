@@ -23,11 +23,7 @@ import java.util.Objects;
 @Log4j2
 public class StompHandler implements ChannelInterceptor {
 
-    @Value("spring.jwt.secret")
-    private String secretKey;
-
     private final JwtServiceImpl jwtService;
-    /*private final SecurityUtil securityUtil;*/
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -41,6 +37,7 @@ public class StompHandler implements ChannelInterceptor {
 
         jwt = jwt.substring(8, jwt.length()-1);
 
+        log.info("preSend.sessionID = " + accessor.getSessionId());
         log.info("JWT 토큰 : " + jwt);
 
         if(command.equals(StompCommand.CONNECT)){
@@ -58,13 +55,15 @@ public class StompHandler implements ChannelInterceptor {
         switch (accessor.getCommand()) {
             case CONNECT:
                 log.info("CONNECT");
+                log.info("postSend.sessionId: {}",sessionId);
+                log.info("postSend.channel:{}",channel);
                 // 유저가 Websocket으로 connect()를 한 뒤 호출됨
 
                 break;
             case DISCONNECT:
                 log.info("DISCONNECT");
-                log.info("sessionId: {}",sessionId);
-                log.info("channel:{}",channel);
+                /*log.info("sessionId: {}",sessionId);
+                log.info("channel:{}",channel);*/
                 // 유저가 Websocket으로 disconnect() 를 한 뒤 호출됨 or 세션이 끊어졌을 때 발생함(페이지 이동~ 브라우저 닫기 등)
                 break;
             default:

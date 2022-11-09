@@ -44,10 +44,15 @@ public class SocketController {
         String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
         String username = event.getMessage().getHeaders().get("nativeHeaders").toString().split("User=\\[")[1].split("]")[0];
 
+        log.info("===========================================");
+        log.info("onConnect.sessionID = " + sessionId);
+        log.info("onConnect.username = " + username);
+        log.info("===========================================");
+
         SESSIONS.put(sessionId, username);
     }
 
-    @EventListener(SessionConnectEvent.class)
+    @EventListener(SessionDisconnectEvent.class)
     public void onDisconnect(SessionDisconnectEvent event){
         SESSIONS.remove(event.getSessionId());
     }
@@ -71,6 +76,8 @@ public class SocketController {
     public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto, SimpMessageHeaderAccessor accessor){
 
         log.info("채팅 api 호출");
+
+        log.info("chatting.sessionID = " + accessor.getSessionId());
 
         String username = SESSIONS.get(accessor.getSessionId());
 

@@ -23,6 +23,7 @@ import sideproject.junior.gamego.principal.SecurityUtil;
 import sideproject.junior.gamego.repository.MemberRepository;
 import sideproject.junior.gamego.service.ChatService;
 import sideproject.junior.gamego.service.NoticeService;
+import org.springframework.messaging.handler.annotation.Header;
 
 import java.util.*;
 
@@ -36,6 +37,7 @@ public class SocketController {
     private final ChatService chatService;
     private final SimpMessagingTemplate template;
     private final MemberRepository memberRepository;
+    private final JwtServiceImpl jwtService;
 
     private static final Map<String, String> SESSIONS = new HashMap<>();
 
@@ -48,7 +50,7 @@ public class SocketController {
         log.info("===========================================");
         log.info("onConnect.sessionID = " + sessionId);
         log.info("===========================================");
-        String username = event.getMessage().getHeaders().get("nativeHeaders").toString()/*.split("User=\\[")[1].split("]")[0]*/;
+        String username = event.getMessage().getHeaders().get("nativeHeaders").toString()/*.split("Username=\\[")[1].split("]")[0]*/;
         log.info("===========================================");
         log.info("onConnect.username = " + username);
         log.info("===========================================");
@@ -77,15 +79,23 @@ public class SocketController {
     }
 
     @MessageMapping("/chatting/room/{roomId}")
-    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto, SimpMessageHeaderAccessor accessor){
-
+    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("token") String token, SimpMessageHeaderAccessor accessor){
+        
+        log.info("===========================================");
+        
         log.info("채팅 api 호출");
-
-        log.info("chatting.sessionID = " + accessor.getSessionId());
-
-        String username = SESSIONS.get(accessor.getSessionId());
-
+        
+        log.info("token = " + token);
+        
+        log.info("===========================================");        
+        
+        String username = jwtService.extractUsername(token).get();
+        
         log.info("username = " + username);
+
+//         log.info("chatting.sessionID = " + accessor.getSessionId());
+
+//         String username = SESSIONS.get(accessor.getSessionId());
 
         Member member = memberRepository.findByUsername(username).get();
 
@@ -95,15 +105,23 @@ public class SocketController {
     }
 
     @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto, SimpMessageHeaderAccessor accessor){
+    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("token") String token, SimpMessageHeaderAccessor accessor){
 
+        log.info("===========================================");
+        
         log.info("Enter_message = " , dto.getContent());
 
         log.info("ChatController.chatRoomEnter 호출");
+        
+        log.info("token = " + token);
 
-        String username = SESSIONS.get(accessor.getSessionId());
-
+        log.info("===========================================");     
+        
+        String username = jwtService.extractUsername(token).get();
+        
         log.info("username = " + username);
+
+//         String username = SESSIONS.get(accessor.getSessionId());
 
         Member member = memberRepository.findByUsername(username).get();
 

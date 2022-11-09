@@ -119,6 +119,8 @@ public class SocketController {
         String jwt = token.substring(7, token.length());
         
         log.info("jwt = " + jwt);
+        
+        log.info("roomId = " + roomId);
 
         log.info("===========================================");     
         
@@ -129,6 +131,8 @@ public class SocketController {
 //         String username = SESSIONS.get(accessor.getSessionId());
 
         Member member = memberRepository.findByUsername(username).get();
+        
+        log.info("member.id = " + member.getId());
 
         MemberDTO memberDTO = chatService.chatRoomEnter(member.getId());
 

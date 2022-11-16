@@ -91,7 +91,7 @@ public class SocketController {
         
         log.info("jwt = " + jwt);
 
-        log.info("dto.getContent = " + message.getPayload().getContent());
+        log.info("dto.getContent = " + message.getPayload().getMessage());
         
         log.info("===========================================");        
         
@@ -115,7 +115,7 @@ public class SocketController {
 
         log.info("===========================================");
         
-        log.info("Enter_message = " + message.getPayload().getContent());
+        log.info("Enter_message = " + message.getPayload().getMessage());
 
         log.info("ChatController.chatRoomEnter 호출");
         

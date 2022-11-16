@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -80,7 +81,7 @@ public class SocketController {
     }
 
     @MessageMapping("/chatting/room/{roomId}")
-    public void chatting(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("Authorization") String token, SimpMessageHeaderAccessor accessor){
+    public void chatting(@DestinationVariable String roomId, Message<ReqChatMessageDTO> dto, @Header("Authorization") String token){
         
         log.info("===========================================");
         
@@ -89,6 +90,8 @@ public class SocketController {
         String jwt = token.substring(7, token.length());
         
         log.info("jwt = " + jwt);
+
+        log.info("dto.getContent = " + dto.getPayload().getContent());
         
         log.info("===========================================");        
         
@@ -102,17 +105,17 @@ public class SocketController {
 
         Member member = memberRepository.findByUsername(username).get();
 
-        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), member.getId(), dto);
+        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), member.getId(), dto.getPayload());
 
         template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
     }
 
     @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId, ReqChatMessageDTO dto, @Header("Authorization") String token, SimpMessageHeaderAccessor accessor){
+    public void chatRoomEnter(@DestinationVariable String roomId, Message<ReqChatMessageDTO> dto, @Header("Authorization") String token){
 
         log.info("===========================================");
         
-        log.info("Enter_message = " , dto.getContent());
+        log.info("Enter_message = " , dto.getPayload().getContent());
 
         log.info("ChatController.chatRoomEnter 호출");
         

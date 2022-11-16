@@ -81,7 +81,7 @@ public class SocketController {
     }
 
     @MessageMapping("/chatting/room/{roomId}")
-    public void chatting(@DestinationVariable String roomId, Message<ReqChatMessageDTO> dto, @Header("Authorization") String token){
+    public void chatting(@DestinationVariable String roomId, Message<ReqChatMessageDTO> message, @Header("Authorization") String token){
         
         log.info("===========================================");
         
@@ -91,7 +91,7 @@ public class SocketController {
         
         log.info("jwt = " + jwt);
 
-        log.info("dto.getContent = " + dto.getPayload().getContent());
+        log.info("dto.getContent = " + message.getPayload().getContent());
         
         log.info("===========================================");        
         
@@ -105,17 +105,17 @@ public class SocketController {
 
         Member member = memberRepository.findByUsername(username).get();
 
-        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), member.getId(), dto.getPayload());
+        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), member.getId(), message.getPayload());
 
         template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
     }
 
     @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId, Message<ReqChatMessageDTO> dto, @Header("Authorization") String token){
+    public void chatRoomEnter(@DestinationVariable String roomId, Message<ReqChatMessageDTO> message, @Header("Authorization") String token){
 
         log.info("===========================================");
         
-        log.info("Enter_message = " , dto.getPayload().getContent());
+        log.info("Enter_message = " + message.getPayload().getContent());
 
         log.info("ChatController.chatRoomEnter 호출");
         

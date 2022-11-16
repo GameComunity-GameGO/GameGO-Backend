@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class ReqChatMessageDTO {
 
-    private String content;
+    private String message;
 }

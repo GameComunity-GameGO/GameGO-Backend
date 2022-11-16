@@ -73,7 +73,7 @@ public class ChatService {
         Member member = memberRepository.findById(memberId).get();
 
         ChatMessage chat = ChatMessage.builder()
-                .content(dto.getContent())
+                .content(dto.getMessage())
                 .member(member)
                 .chatRoom(chatRoom)
                 .build();

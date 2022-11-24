@@ -8,12 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.socket.messaging.SessionConnectEvent;
-import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import sideproject.junior.gamego.model.dto.MemberDTO;
 import sideproject.junior.gamego.model.dto.chat.MessageDTO;
 import sideproject.junior.gamego.model.dto.chat.ReqChatMessageDTO;
@@ -37,7 +33,6 @@ public class SocketController {
     private final SecurityUtil securityUtil;
     private final NoticeService noticeService;
     private final ChatService chatService;
-    private final SimpMessagingTemplate template;
     private final MemberRepository memberRepository;
     private final JwtServiceImpl jwtService;
 

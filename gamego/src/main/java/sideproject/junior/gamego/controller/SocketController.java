@@ -75,70 +75,70 @@ public class SocketController {
         return new ResponseEntity<>(chatAlarmList, HttpStatus.OK);
     }
 
-    @MessageMapping("/notice/chat/room/{roomId}")  // /app/notice/chat/room/{roomId}
-    public void chatNotice(@DestinationVariable String roomId){
-        template.convertAndSend("/topic/chat/room/" + roomId, "메세지 알림 추가");
-    }
+//     @MessageMapping("/notice/chat/room/{roomId}")  // /app/notice/chat/room/{roomId}
+//     public void chatNotice(@DestinationVariable String roomId){
+//         template.convertAndSend("/topic/chat/room/" + roomId, "메세지 알림 추가");
+//     }
 
-    @MessageMapping("/chatting/room/{roomId}")
-    public void chatting(@DestinationVariable String roomId, Message<ReqChatMessageDTO> message, @Header("Authorization") String token){
+//     @MessageMapping("/chatting/room/{roomId}")
+//     public void chatting(@DestinationVariable String roomId, Message<ReqChatMessageDTO> message, @Header("Authorization") String token){
         
-        log.info("===========================================");
+//         log.info("===========================================");
         
-        log.info("채팅 api 호출");
+//         log.info("채팅 api 호출");
         
-        String jwt = token.substring(7, token.length());
+//         String jwt = token.substring(7, token.length());
         
-        log.info("jwt = " + jwt);
+//         log.info("jwt = " + jwt);
 
-        log.info("dto.getContent = " + message.getPayload().getMessage());
+//         log.info("dto.getContent = " + message.getPayload().getMessage());
         
-        log.info("===========================================");        
+//         log.info("===========================================");        
         
-        String username = jwtService.extractUsername(jwt).get();
+//         String username = jwtService.extractUsername(jwt).get();
         
-        log.info("username = " + username);
+//         log.info("username = " + username);
 
-//         log.info("chatting.sessionID = " + accessor.getSessionId());
+// //         log.info("chatting.sessionID = " + accessor.getSessionId());
 
-//         String username = SESSIONS.get(accessor.getSessionId());
+// //         String username = SESSIONS.get(accessor.getSessionId());
 
-        Member member = memberRepository.findByUsername(username).get();
+//         Member member = memberRepository.findByUsername(username).get();
 
-        ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), member.getId(), message.getPayload());
+//         ResChatMessageDTO chatMessage = chatService.createChat(Long.parseLong(roomId), member.getId(), message.getPayload());
 
-        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
-    }
+//         template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(1, chatMessage));
+//     }
 
-    @MessageMapping("/chat/room/{roomId}/enter")
-    public void chatRoomEnter(@DestinationVariable String roomId, Message<ReqChatMessageDTO> message, @Header("Authorization") String token){
+//     @MessageMapping("/chat/room/{roomId}/enter")
+//     public void chatRoomEnter(@DestinationVariable String roomId, Message<ReqChatMessageDTO> message, @Header("Authorization") String token){
 
-        log.info("===========================================");
+//         log.info("===========================================");
         
-        log.info("Enter_message = " + message.getPayload().getMessage());
+//         log.info("Enter_message = " + message.getPayload().getMessage());
 
-        log.info("ChatController.chatRoomEnter 호출");
+//         log.info("ChatController.chatRoomEnter 호출");
         
-        String jwt = token.substring(7, token.length());
+//         String jwt = token.substring(7, token.length());
         
-        log.info("jwt = " + jwt);
+//         log.info("jwt = " + jwt);
         
-        log.info("roomId = " + roomId);
+//         log.info("roomId = " + roomId);
 
-        log.info("===========================================");     
+//         log.info("===========================================");     
         
-        String username = jwtService.extractUsername(jwt).get();
+//         String username = jwtService.extractUsername(jwt).get();
         
-        log.info("username = " + username);
+//         log.info("username = " + username);
 
-//         String username = SESSIONS.get(accessor.getSessionId());
+// //         String username = SESSIONS.get(accessor.getSessionId());
 
-        Member member = memberRepository.findByUsername(username).get();
+//         Member member = memberRepository.findByUsername(username).get();
         
-        log.info("member.id = " + member.getId());
+//         log.info("member.id = " + member.getId());
 
-        MemberDTO memberDTO = chatService.chatRoomEnter(member.getId());
+//         MemberDTO memberDTO = chatService.chatRoomEnter(member.getId());
 
-        template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));
-    }
+//         template.convertAndSend("/topic/chat/room/" + roomId, new MessageDTO<>(2, memberDTO));
+//     }
 }

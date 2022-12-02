@@ -61,13 +61,13 @@ public class ChatController {
         return new ResponseEntity<>(chatService.getChatRoomList(memberId), HttpStatus.OK);
     }
     
-    @GetMapping("/chat/all/room/list")
-    public ResponseEntity<?> getChatRoomList(){
+//     @GetMapping("/chat/all/room/list")
+//     public ResponseEntity<?> getChatRoomList(){
         
-        log.info("chatController.getAllChatRoomList 호출");
+//         log.info("chatController.getAllChatRoomList 호출");
 
-        return new ResponseEntity<>(chatService.getAllChatRoomList(), HttpStatus.OK);
-    }
+//         return new ResponseEntity<>(chatService.getAllChatRoomList(), HttpStatus.OK);
+//     }
 
     @PostMapping("/chat/room/{roomId}/join") // 채팅방 처음 입장
     public ResponseEntity<?> joinRoom(@PathVariable String roomId){

@@ -122,7 +122,7 @@ public class ChatService {
     
     public List<ResChatRoomDTO> getAllChatRoomList() {
 
-        List<ResChatRoomDTO> getAllRoomList = chatRoomRepository.findAll().stream().map(ChatRoom::toResDTO()).collect(Collectors.toList());
+        List<ResChatRoomDTO> getAllRoomList = chatRoomRepository.findAll().stream().map(ChatRoom::toResDTO).collect(Collectors.toList());
         
         return getAllRoomList;
     }

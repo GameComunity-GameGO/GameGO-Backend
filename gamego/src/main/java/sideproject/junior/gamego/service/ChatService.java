@@ -121,13 +121,13 @@ public class ChatService {
         return getRoomList;
     }
     
-    public List<ResChatRoomDTO> getAllChatRoomList() {
+    public List<ChatRoom> getAllChatRoomList() {
 
         List<ChatRoom> getAllRoomList = chatRoomRepository.findAll();
         
-        List<ResChatRoomDTO> result = getAllRoomList.stream().map(ChatRoom::toDTO).collect(Collectors.toList());
+//         List<ResChatRoomDTO> result = getAllRoomList.stream().map(ChatRoom::toDTO).collect(Collectors.toList());
         
-        return result;
+        return getAllRoomList;
     }
 
     public MemberDTO chatRoomEnter(Long memberId) {

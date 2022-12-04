@@ -99,7 +99,7 @@ public class ChatService {
 
         log.info("ChatService.joinRoom-member.id = " + member.getId());
         
-        for (ChatRoomJoinMember chatRoomJoinMember : member.getChatRoomJoinMembers()) {
+        for (ChatRoomJoinMember chatRoomJoinMember : chatRoom.getChatRoomJoinMembers()) {
             if(chatRoomJoinMember.getMember().getId() == memberId){
                 return 1;
             }

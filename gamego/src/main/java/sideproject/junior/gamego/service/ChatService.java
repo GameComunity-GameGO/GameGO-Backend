@@ -88,9 +88,15 @@ public class ChatService {
         return savedChat.toDTO();
     }
 
-    public void joinRoom(Long memberId, Long roomId) {
+    public int joinRoom(Long memberId, Long roomId) {
 
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+        
+        for (ChatRoomJoinMember chatRoomJoinMember : member.getChatRoomJoinMembers()) {
+            if(chatRoomJoinMember.getMember().getId() == memberId){
+                return 1;
+            }
+        }
 
         log.info("ChatService.joinRoom-chatRoom.id = " + chatRoom.getId());
 
@@ -106,6 +112,8 @@ public class ChatService {
         ChatRoomJoinMember savedJoinMember = joinMemberRepository.save(joinMember);
 
         chatRoom.joinMember(savedJoinMember);
+        
+        return 0;
     }
 
     public List<ResChatRoomDTO> getChatRoomList(Long memberId) {

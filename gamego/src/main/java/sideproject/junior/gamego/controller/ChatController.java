@@ -62,7 +62,7 @@ public class ChatController {
     }
     
     @GetMapping("/chat/all/room/list")
-    public ResponseEntity<?> getChatRoomList(){
+    public ResponseEntity<?> getAllChatRoomList(){
         
         log.info("chatController.getAllChatRoomList 호출");
 

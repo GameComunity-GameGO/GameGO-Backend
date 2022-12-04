@@ -121,14 +121,17 @@ public class ChatService {
         return getRoomList;
     }
     
-//     public List<ChatRoom> getAllChatRoomList() {
+    public List<ResChatRoomDTO> getAllChatRoomList() {
 
-//         List<ChatRoom> getAllRoomList = chatRoomRepository.findAll();
+        List<ChatRoom> getAllRoomList = chatRoomRepository.findAll();
         
-//         List<ResChatRoomDTO> result = getAllRoomList.stream().map(ChatRoom::toDTO).collect(Collectors.toList());
+        List<ResChatRoomDTO> roomList = new ArrayList<>();
         
-//         return result;
-//     }
+        for (ChatRoom chatRoom : getAllRoomList){
+            roomList.add(chatRoom.toResDTO());
+        }
+        return roomList;
+    }
 
     public MemberDTO chatRoomEnter(Long memberId) {
 

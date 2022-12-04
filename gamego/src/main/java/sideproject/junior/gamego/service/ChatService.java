@@ -92,17 +92,18 @@ public class ChatService {
 
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
         
-        for (ChatRoomJoinMember chatRoomJoinMember : member.getChatRoomJoinMembers()) {
-            if(chatRoomJoinMember.getMember().getId() == memberId){
-                return 1;
-            }
-        }
-
+        
         log.info("ChatService.joinRoom-chatRoom.id = " + chatRoom.getId());
 
         Member member = memberRepository.findById(memberId).get();
 
         log.info("ChatService.joinRoom-member.id = " + member.getId());
+        
+        for (ChatRoomJoinMember chatRoomJoinMember : member.getChatRoomJoinMembers()) {
+            if(chatRoomJoinMember.getMember().getId() == memberId){
+                return 1;
+            }
+        }
 
         ChatRoomJoinMember joinMember = ChatRoomJoinMember.builder()
                 .chatRoom(chatRoom)

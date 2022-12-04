@@ -76,9 +76,10 @@ public class ChatController {
 
         log.info("ChatController.joinRoom 호출");
 
-        chatService.joinRoom(memberId, Long.parseLong(roomId));
-
-        return new ResponseEntity<>("채팅방 처음 입장 성공", HttpStatus.OK);
+        if(chatService.joinRoom(memberId, Long.parseLong(roomId)) == 0){
+            return new ResponseEntity<>("채팅방 처음 입장 성공", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("채팅방에 이미 있음", HttpStatus.OK);
     }
 
     @PostMapping("/chat/room/{roomId}/msg/{msgId}/checkPoint")

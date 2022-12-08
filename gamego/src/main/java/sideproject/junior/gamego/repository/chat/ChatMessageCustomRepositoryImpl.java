@@ -20,10 +20,11 @@ public class ChatMessageCustomRepositoryImpl implements ChatMessageCustomReposit
     @Override
     public Long getNoticeCount(Long roomId, Long messageId) {
 
-        return queryFactory.selectFrom(chatMessage)
+        int size = queryFactory.selectFrom(chatMessage)
                 .where(chatMessage.chatRoom.id.eq(roomId))
-                .orderBy(chatMessage.id.desc())
                 .where(chatMessage.id.gt(messageId))
-                .stream().count();
+                .fetch().size();
+
+        return (long) size;
     }
 }

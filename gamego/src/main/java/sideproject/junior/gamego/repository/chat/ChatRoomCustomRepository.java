@@ -1,6 +1,6 @@
 package sideproject.junior.gamego.repository.chat;
 
-public interface ChatRoomCustomRepository {
+public interface ChatMessageCustomRepository {
 
     Long getNoticeCount(Long roomId, Long messageId);
 }

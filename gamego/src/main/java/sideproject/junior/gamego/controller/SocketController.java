@@ -60,7 +60,7 @@ public class SocketController {
 //         SESSIONS.remove(event.getSessionId());
 //     }
 
-    @GetMapping("/notice/chat/room/list")
+    @GetMapping("/api/notice/chat/room/list")
     public ResponseEntity<?> getChatAlarmList(){
 
         Long memberId = securityUtil.getMemberId();

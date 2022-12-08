@@ -9,11 +9,11 @@ import javax.persistence.EntityManager;
 import static sideproject.junior.gamego.model.entity.QChatMessage.*;
 import static sideproject.junior.gamego.model.entity.QChatRoom.*;
 
-public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
+public class ChatMessageCustomRepositoryImpl implements ChatMessageCustomRepository{
 
     private final JPAQueryFactory queryFactory;
 
-    public ChatRoomCustomRepositoryImpl(EntityManager em){
+    public ChatMessageCustomRepositoryImpl(EntityManager em){
         this.queryFactory = new JPAQueryFactory(em);
     }
 
